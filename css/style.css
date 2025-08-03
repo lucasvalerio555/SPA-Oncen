@@ -246,6 +246,7 @@ body::-webkit-scrollbar-thumb {
     border-radius: 2em;
     box-shadow: 10px 20px 60px #6566;
     font-family: var(--bs-font-sans-serif);
+    line-height: 1.4;
 }
 
 .card-info__conteiner-images {
@@ -274,8 +275,6 @@ body::-webkit-scrollbar-thumb {
     font-size: 1.2rem;
     font-family: 'Roboto Condensed', sans-serif;
 }
-
-
 
 .conteiner-card {
     display: grid;
@@ -431,7 +430,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .contact-form__submit {
-
     padding: 10px;
     width: 60%;
     background: #82C262;

@@ -1,0 +1,70 @@
+{
+  "titleClass": "form-title",
+  "formClass": "contact-form",
+  "formFields": [
+    { 
+      "type": "text",
+      "name": "name",
+      "label": "Nombre",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    },
+    { 
+      "type": "text",
+      "name": "surname",
+      "label": "Apellido",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    },
+    { 
+      "type": "text",
+      "name": "phone",
+      "label": "Teléfono",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    },
+    { 
+      "type": "email",
+      "name": "email",
+      "label": "Email",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    },
+    { 
+      "type": "password",
+      "name": "password",
+      "label": "Contraseña",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    },
+    { 
+      "type": "password",
+      "name": "password-confirm",
+      "label": "Confirmar Contraseña",
+      "labelClass": "contact-form__label",
+      "inputClass": "contact-form__input",
+      "required": true
+    }
+  ],
+  "genderFieldsetClass": "gender-fieldset",
+  "genderOptions": [
+    { 
+      "value": "Hombre", 
+      "label": "Hombre", 
+      "labelClass": "contact-form__label"
+    },
+    { 
+      "value": "Mujer", 
+      "label": "Mujer", 
+      "labelClass": "contact-form__label"
+    }
+  ],
+  "submitText": "Registrarse",
+  "submitClass": "contact-form__submit"
+}
+

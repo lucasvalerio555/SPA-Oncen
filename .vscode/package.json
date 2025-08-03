@@ -1,0 +1,14 @@
+{
+  "name": "SPA_ONCE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "browser-sync start --proxy \"http://localhost\" --files \"**/*.php, **/*.css, **/*.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.29.0"
+  }
+}

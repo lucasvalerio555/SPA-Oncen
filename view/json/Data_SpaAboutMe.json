@@ -1,0 +1,56 @@
+{
+  "aside": {
+    "class": "conteiner-aise__aside",
+    "avatars": [
+      { "src": "img/person1-1.jpg", "alt": "Retrato de profesional 1" },
+      { "src": "img/person2.jpg", "alt": "Retrato de profesional 2" },
+      { "src": "img/person3.jpg", "alt": "Retrato de profesional 3" }
+    ],
+    "title": "🌿 Nuestro equipo de especialistas",
+    "description": "En nuestro spa termal, situado en el departamento de Salto junto a las termas del Daymán y a la vera del río, contamos con un equipo de profesionales altamente capacitados y comprometidos con la excelencia en el servicio. Cada especialista posee una sólida formación y una amplia experiencia en técnicas de relajación, terapias corporales y tratamientos de bienestar, siempre orientados a satisfacer las necesidades particulares de cada visitante. Nos enorgullece ofrecer un espacio pensado para el descanso y la renovación, donde el conocimiento y la dedicación de nuestro personal se combinan con modernas instalaciones: piscinas termales, hidromasaje, sauna, masajes tradicionales y orientales, además de actividades como yoga, pilates y meditación, todo diseñado para brindar una experiencia única de relax, equilibrio y cuidado integral del cuerpo y la mente. Nuestro spa ocupa un terreno de aproximadamente tres hectáreas y cuenta también con piscina de barro mineralizada, servicios complementarios como alquiler de bicicletas, paseos a caballo, actividades recreativas para todas las edades y un entorno natural inigualable que invita a la desconexión. Cada detalle ha sido cuidadosamente pensado para que nuestros visitantes encuentren un refugio de serenidad y bienestar en el corazón de las termas.",
+    "contact": {
+      "title": "Contacto",
+      "items": [
+        { "icon": "fab fa-whatsapp", "text": "+598 09727237" },
+        { "icon": "fas fa-envelope", "text": "contacto@spatermal.com" },
+        { "icon": "fas fa-map-marker-alt", "text": "18 de Julio, Montevideo" }
+      ]
+    },
+    "contactForm": {
+      "title": "Envíanos un mensaje",
+      "formClass": "contact-form",
+      "fields": [
+        {
+          "type": "text",
+          "id": "contact-name",
+          "name": "name",
+          "label": "Nombre",
+          "placeholder": "Tu nombre",
+          "class": "contact-form__input",
+          "labelClass": "contact-form__label"
+        },
+        {
+          "type": "email",
+          "id": "contact-email",
+          "name": "email",
+          "label": "Email",
+          "placeholder": "tu@email.com",
+          "class": "contact-form__input",
+          "labelClass": "contact-form__label"
+        },
+        {
+          "type": "textarea",
+          "id": "contact-message",
+          "name": "message",
+          "label": "Mensaje",
+          "placeholder": "Escribe tu mensaje",
+          "class": "contact-form__textarea",
+          "labelClass": "contact-form__label"
+        }
+      ],
+      "submitText": "Enviar",
+      "submitClass": "contact-form__submit"
+    }
+  }
+}
+

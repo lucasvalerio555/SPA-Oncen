@@ -1,0 +1,90 @@
+{
+  "titles": {
+    "main": "Login",
+    "class": "logintitulo"
+  },
+  "form": {
+    "class": "contact-form",
+    "inputs": [
+      {
+        "id": "label-name",
+        "name": "usuario",
+        "label": "Usuario",
+        "class": "contact-form__input",
+        "labelClass": "contact-form__label"
+      },
+      {
+        "id": "label-password",
+        "name": "contrasena",
+        "label": "Contraseña",
+        "class": "contact-form__input",
+        "labelClass": "contact-form__label"
+      }
+    ],
+    "forgotPasswordText": "Olvido su contraseña?",
+    "forgotPasswordClass": "forgot-password",
+    "submitText": "Login",
+    "submitClass": "contact-form__submit",
+    "socialLoginText": "O iniciar sesión con",
+    "socialButtons": [
+      {
+        "url": "#",
+        "class": "contact-form__social google",
+        "icon": "fab fa-google",
+        "text": "Google"
+      },
+      {
+        "url": "#",
+        "class": "contact-form__social facebook",
+        "icon": "fab fa-facebook-f",
+        "text": "Facebook"
+      }
+    ]
+  },
+  "footer": {
+    "class": "footer",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam eum harum corrupti dicta, aliquam sequi voluptate quas.",
+    "sections": [
+      {
+        "title": "SOBRE NOSOTROS",
+        "content": [
+          "Somos un spa termal, con 20 años de experiencia en atención al público, brindando a nuestros clientes, una experiencia reconfortante."
+        ],
+        "class": "sectiion__main--cards"
+      },
+      {
+        "title": "HORARIOS",
+        "content": [
+          "Lunes a Domingos",
+          "De 10 a 20 horas",
+          "Vestaurios habilitados hasta las 20:30 horas"
+        ],
+        "class": "sectiion__main--cards"
+      },
+      {
+        "title": "CONTACTO",
+        "content": [
+          "<i class=\"fab fa-whatsapp\"></i> +598 09727237",
+          "<i class=\"fas fa-home mr-3\"></i> 18 de Julio"
+        ],
+        "class": "sectiion__main--cards"
+      }
+    ],
+    "socialLinks": [
+      {
+        "html": "<a class=\"btn btn-outline-light btn-floating m-1\" href=\"https://www.facebook.com/profile.php?id=100070716856962\" role=\"button\"><i class=\"fab fa-facebook-f\"></i></a>"
+      },
+      {
+        "html": "<a class=\"btn btn-outline-light btn-floating m-1\" href=\"#!\" role=\"button\"><i class=\"fab fa-twitter\"></i></a>"
+      },
+      {
+        "html": "<a class=\"btn btn-outline-light btn-floating m-1\" href=\"#!\" role=\"button\"><i class=\"fab fa-google\"></i></a>"
+      },
+      {
+        "html": "<a class=\"btn btn-outline-light btn-floating m-1\" href=\"#!\" role=\"button\"><i class=\"fab fa-instagram\"></i></a>"
+      }
+    ],
+    "copyright": "© 2020 Copyright: www.spatermal.com"
+  }
+}
+

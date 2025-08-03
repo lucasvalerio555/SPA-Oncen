@@ -1,0 +1,128 @@
+<?php
+// Aquí puedes agregar lógica PHP si la necesitas
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrador</title>
+
+  <!-- Iconos y fuentes -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://kit.fontawesome.com/25b6da0530.js" crossorigin="anonymous"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/normalize.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <div class="wrapper wrapper_dashboard">
+    <!-- Navbar -->
+    <nav class="nav__bar" id="nav-menu"></nav>
+
+      <!-- Botón de menú (único para todas las páginas) -->
+      <div class="conteiner__toggle" id="toggle">
+        <span class="material-symbols-outlined">menu</span>
+      </div>
+
+      <!-- Menú dashboard -->
+      <ul class="menu__bar__dashboard menu" id="menu-dashboard">
+
+        <div class="conteiner__icon-profile">
+          <a class="menu__bar__a" href="admin.php">
+            <span class="material-symbols-outlined">
+              person
+            </span>
+          </a>
+        </div>
+
+        <li class="menu__bar__li">
+          <a class="menu__bar__a" href="reserva.php">
+            <span class="material-icons-outlined material__move__slider">edit_calendar</span>
+            Realizar Reserva
+          </a>
+        </li>
+
+        <li class="menu__bar__li">
+          <a class="menu__bar__a" href="viewreserva.php">
+            <span class="material-icons-outlined material__move__slider">receipt_long</span>
+            Ver Reserva
+          </a>
+        </li>
+
+        <li class="menu__bar__li">
+          <a class="menu__bar__a" href="print.php">
+            <span class="material-icons-outlined material__move__slider">print</span>
+            Imprimir Reserva
+          </a>
+        </li>
+      </ul>
+
+      <div class="container_arrow">
+        <div class="arrow-down" id="scroll-arrow"></div>
+      </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main">
+      <!-- Aquí va el contenido de tu página -->
+      <div class="container__card__space">
+        <div class="card__space">
+          <div class="container__icon__setting">
+            <div class="item__setting"></div>
+            <div class="item__setting"></div>
+            <div class="item__setting"></div>
+          </div>
+          <div>
+            <div class="card__space__conatainer__images">
+              <img src="../img/logo-spa.png" alt="Logo Spa">
+            </div>
+            <p>SPA Termal Oncen</p>
+          </div>
+
+          <p class="card__text">
+          No hay comentarios disponibles,
+          por ahora
+          </p>
+          <div class="card__space_conainer_form">
+            <form action="#" method="POST">
+              <input type="text" placeholder="Dejar un comentario....">
+              <button type="submit">
+                <span class="material-symbols-outlined icon__button">
+                    send
+                </span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="server__card">
+        <p class="card__title">servicios relacionados</p>
+        <div class="server__card__container__images">
+          <img src="../img/Traslados.jpg" class="server__card__container__images__images" alt="Card Traslados">
+        </div>
+        <div class="server__card__container__images">
+          <img src="../img/bicicletas.jpg" class="server__card__container__images__images" alt="Card Bicicletas">
+        </div>
+        <div class="container-chart">
+          <canvas id="Chart"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/RenderMenu.js"></script>
+    <script src="../js/Toggle.js"></script>
+    <script src="../js/Chart.js"></script>
+    <script type="module" src="../js/RenderGraph.js"></script>
+    <script src="../js/MoveArrowScroll.js"></script>
+  </div>
+</body>
+</html>

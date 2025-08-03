@@ -1,0 +1,102 @@
+{
+  "footerCards": [
+    {
+      "title": "SOBRE NOSOTROS",
+      "content": [
+        "Somos un spa termal, con 20 años de experiencia ofreciendo bienestar y relajación."
+      ]
+    },
+    {
+      "title": "HORARIOS",
+      "content": [
+        "Lunes a Domingos",
+        "De 10 a 20 horas",
+        "Vestuarios habilitados hasta las 20:30 horas"
+      ]
+    },
+    {
+      "title": "CONTACTO",
+      "content": [
+        "<i class=\"fab fa-whatsapp\"></i> +598 09727237",
+        "<i class=\"fas fa-home\"></i> 18 de Julio"
+      ]
+    }
+  ],
+  "infoCards": [
+    {
+      "title": "Piscina Termal Techada",
+      "description": "Relájate en nuestra piscina termal techada con agua a 26ºC, ideal para disfrutar todo el año.",
+      "image": "./img/slider1.jpg",
+      "alt": "Piscina termal techada",
+      "link": "?route=service_piscina_techada"
+    },
+    {
+      "title": "Sauna Tradicional",
+      "description": "Disfruta del calor seco para eliminar toxinas y revitalizar cuerpo y mente.",
+      "image": "./img/sauna.jpg",
+      "alt": "Sauna tradicional",
+      "link": "?route=service_sauna"
+    },
+    {
+      "title": "Hidromasaje",
+      "description": "Sumérgete en burbujas terapéuticas y reduce el estrés con nuestro moderno hidromasaje.",
+      "image": "./img/slider1.jpg",
+      "alt": "Hidromasaje relajante",
+      "link": "?route=service_hidromasaje"
+    },
+    {
+      "title": "Cabalgatas Guiadas",
+      "description": "Explora la naturaleza en un paseo a caballo por las zonas más hermosas del Daymán.",
+      "image": "./img/cabalgatas.jpg",
+      "alt": "Cabalgatas guiadas",
+      "link": "?route=service_cabalgatas"
+    },
+    {
+      "title": "Alquiler de Bicicletas",
+      "description": "Recorre nuestros senderos con bicicletas disponibles para grandes y chicos.",
+      "image": "./img/bicicletas.jpg",
+      "alt": "Alquiler de bicicletas",
+      "link": "?route=service_bicicletas"
+    },
+    {
+      "title": "Paseos en Bote",
+      "description": "Navega por el Río Daymán y disfruta de paisajes únicos durante una hora de paseo.",
+      "image": "./img/botes.jpg",
+      "alt": "Paseos en bote",
+      "link": "?route=service_bote"
+    }
+  ],
+  "avatars": [
+    "img/person1-1.jpg",
+    "img/person2.jpg",
+    "img/person3.jpg"
+  ],
+  "asideText": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, repellendus.",
+  "socialLinks": [
+    {
+      "url": "https://www.facebook.com/profile.php?id=100070716856962",
+      "icon": "fab fa-facebook-f"
+    },
+    {
+      "url": "#!",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "url": "#!",
+      "icon": "fab fa-google"
+    },
+    {
+      "url": "#!",
+      "icon": "fab fa-instagram"
+    }
+  ],
+  "footerDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt distinctio earum repellat.",
+  "sliderImages": [
+    "https://2.bp.blogspot.com/-6Lnm5hIRyTc/UCq_LMeNZJI/AAAAAAABDrc/uvqLW8NEHUw/s1600/tiempo-de-spa-relajacion-descanso-relax-chica-g.jpg",
+    "https://wallpapercave.com/wp/wp4085176.jpg",
+    "https://img.freepik.com/foto-grafica/mujer-relajante-salon-spa-mascara-cosmetica-cara_186202-8009.jpg?w=2000"
+  ],
+  "title": "Bienvenido a SPA Termal Ocean",
+  "description": "Somos una empresa enfocada en brindar servicios de masajes y diferentes tipos de tratamientos."
+}
+
