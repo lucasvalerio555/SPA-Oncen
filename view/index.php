@@ -9,6 +9,8 @@ require_once $basePath . 'config/settingDB.php';
 require_once $basePath . 'models/Router.php';
 require_once $basePath . 'controllers/ValidationRegister.php';
 require_once $basePath . 'controllers/ValidationMail.php';
+require_once $basePath . 'controllers/ValidationLogin.php';
+require_once $basePath . 'models/ModelsLogin.php';
 
 $router = new \App\Models\Router();
 $route = trim($_GET['route'] ?? 'index', '/');
@@ -285,10 +287,9 @@ const renderHome = (data) => `
 
 const renderLoginForm = (data) => {
   const { titles, form } = data;
-
   return `
     <div class="conteiner-from" style="margin-top: 4rem;">
-      <form action="" class="${form.class}" method="post">
+      <form action="index.php" class="${form.class}" method="post">
         <div class="${titles.class}">
           <span>${titles.main}</span>
         </div>
@@ -548,19 +549,23 @@ $registerResult = ValidationRegister::processForm();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
     try {
-  $config = new config();
-  $db = new SettingDB($config::configDB());
+  	$config = new config();
+  	$db = new SettingDB($config::configDB());
 
-  echo ValidationRegister::generateToastScript(
-     $registerResult['success'] ? 'success' : 'error',
-     $registerResult['success'] ? '¡¡¡Registrado correctamente!!!' : 'No se pudo registrar.',
-     $registerResult['success'] ? '#4caf50' : '#e74c3c'
-  );
-} catch(PDOException $e) {
-  error_log("DB connection error: " . $e->getMessage());
-  echo "<script>Swal.fire({icon:'error',title:'❌ Error de conexión.',showConfirmButton:false,timer:2500});</script>";
-}
-
+  	echo ValidationRegister::generateToastScript(
+     	$registerResult['success'] ? 'success' : 'error',
+     	$registerResult['success'] ? '¡¡¡Registrado correctamente!!!' : 'No se pudo registrar.',
+     	$registerResult['success'] ? '#4caf50' : '#e74c3c'
+  	);
+   }catch(PDOException $e) {
+  	error_log("DB connection error: ". $e->getMessage());
+  	echo "<script>
+  		 Swal.fire({
+  		 icon:'error',title:
+  		 '❌ Error de conexión.',
+  		 showConfirmButton:false,timer:2500});
+  	      </script>";
+       }
     }
 
     if (isset($_POST['submit_contact'])) {
@@ -574,21 +579,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validar campos vacíos
         if ($firstName === '' || $email === '' || $userMsg === '') {
-            echo "<script>Swal.fire({icon:'warning',title:'⚠️ Debes rellenar todos los campos !!!',showConfirmButton:false,timer:2500});</script>";
+            echo "<script>
+            	      Swal.fire({icon:'warning',title:
+            	     '⚠️ Debes rellenar todos los campos !!!',
+            	     showConfirmButton:false,timer:2500});
+            	  </script>";
         } else {
             $mailService = new ValidationMail();
             $mailResult = $mailService->validateAndSend($firstName, $email, $userMsg);
 
             echo match ($mailResult) {
-                'success' => "<script>Swal.fire({icon:'success',title:'✅ Mensaje enviado correctamente !!!',showConfirmButton:false,timer:2500});</script>",
-                'error'   => "<script>Swal.fire({icon:'error',title:'❌ Error al enviar el mensaje !!!',showConfirmButton:false,timer:2500});</script>",
-                default   => "<script>Swal.fire({icon:'error',title:'❌ Error desconocido !!!',showConfirmButton:false,timer:2500});</script>",
+                'success' => "<script>Swal.fire({
+                		      icon:'success',title:
+                		      '✅ Mensaje enviado correctamente !!!',
+                		      showConfirmButton:false,timer:2500});
+                	     </script>",
+                'error'   => "<script>Swal.fire({
+                	      	icon:'error', title:
+                	          '❌ Error al enviar el mensaje !!!',
+                	          showConfirmButton:false,timer:2500});
+                	      </script>",
+                default   => "<script>
+                	      	Swal.fire({
+                	      	icon:'error',title:
+                	      	'❌ Error desconocido !!!',
+                	      	showConfirmButton:false,timer:2500});
+                	      </script>",
             };
         }
     }
     
     if(isset($_POST['submit__login'])){
      	echo "zona de lógin.....";
+     	$login =new ValidationRegister();
+	$models =new ModelsLogin();
+
+	$login->login($models);
+
+	if(!$login->FieldIsEmpty()){
+	    echo 'Login....';
+	    if(isset($_POST['submit-google'])){
+	      $login->SignLoginGoogle();
+	      $login->requestCode($_GET['code']);
+	      
+	    }else if(isset($_POST['submit-facebook'])){
+	       echo 'Login facebook!!!';
+	    }	
+	}
     }
 }
 ?>

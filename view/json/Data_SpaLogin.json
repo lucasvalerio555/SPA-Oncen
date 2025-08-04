@@ -28,13 +28,13 @@
     "socialLoginText": "O iniciar sesión con",
     "socialButtons": [
       {
-        "url": "#",
+        "url": "submit-google",
         "class": "contact-form__social google",
         "icon": "fab fa-google",
         "text": "Google"
       },
       {
-        "url": "#",
+        "url": "submit-facebook",
         "class": "contact-form__social facebook",
         "icon": "fab fa-facebook-f",
         "text": "Facebook"
