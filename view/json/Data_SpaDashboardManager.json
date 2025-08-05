@@ -1,0 +1,22 @@
+{
+  "manager": {
+    "resumen": {
+      "reservasHoy": 45,
+      "ingreso": "$U 20.000",
+      "capacidad": "75%"
+    },
+    "reservas": [
+      {
+        "servicio": "Piscina",
+        "fecha": "2025-06-10",
+        "precio": "$U 1.000"
+      },
+      {
+        "servicio": "Masaje oriental",
+        "fecha": "2025-06-10",
+        "precio": "$U 2.000"
+      }
+    ]
+  }
+}
+

@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "card": {
+      "settingsCount": 3,
+      "imageSrc": "../img/logo-spa.png",
+      "title": "SPA Termal Oncen",
+      "message": "No hay comentarios disponibles, por ahora",
+      "placeholder": "Dejar un comentario...."
+    },
+    "services": {
+      "title": "servicios relacionados",
+      "images": [
+        {
+          "src": "../img/Traslados.jpg",
+          "alt": "Card Traslados"
+        },
+        {
+          "src": "../img/bicicletas.jpg",
+          "alt": "Card Bicicletas"
+        }
+      ],
+      "chartId": "Chart"
+    }
+  }
+}
+

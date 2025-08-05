@@ -1,0 +1,30 @@
+{
+  "client": {
+    "servicios": [
+      {
+        "imagen": "../img/bicicletas.jpg",
+        "alt": "paseo en bicicleta",
+        "titulo": "title",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "imagen": "../img/Traslados.jpg",
+        "alt": "traslados",
+        "titulo": "title2",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "imagen": "../img/botes.jpg",
+        "alt": "paseo en bote",
+        "titulo": "title3",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ],
+    "comentarios": [
+      "Excelente servicio",
+      "Muy buena experiencia",
+      "Repetiría sin dudarlo"
+    ]
+  }
+}
+
