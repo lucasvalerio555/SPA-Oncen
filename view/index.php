@@ -147,6 +147,7 @@ const app = document.getElementById('app');
 function setupImageSlider() {
   const slider = document.querySelector('.slider');
   const slides = document.querySelectorAll('.slider__element');
+  const sliderImages = ['',''];
   const totalSlides = slides.length;
   let current = 0;
 
@@ -172,12 +173,14 @@ function setupImageSlider() {
 function setupManualSliderButtons() {
   const slides = document.querySelectorAll('.slider__element');
   let current = 0;
-  document.getElementById('button__left')?.addEventListener('click', () => {
+  document.getElementById('button__left')?.addEventListener('click', 
+  () => {
     slides[current].classList.remove('active');
     current = (current - 1 + slides.length) % slides.length;
     slides[current].classList.add('active');
   });
-  document.getElementById('button__right')?.addEventListener('click', () => {
+  document.getElementById('button__right')?.addEventListener('click', 
+  () => {
     slides[current].classList.remove('active');
     current = (current + 1) % slides.length;
     slides[current].classList.add('active');
@@ -204,12 +207,19 @@ function setupCardSlider(data) {
              <h2 class="card-info__span">${card.title}</h2>
          </header>
         <p class="card-info__paragraph">${card.description}</p>
-        <div><a href="${card.link}" class="card-info__a">Más Información</a></div>
+        <div>
+          <a href="${card.link}" class="card-info__a">
+           Más Información
+         </a>
+       </div>
       </div>
     `).join('');
   }
   renderCards();
-  prevBtn?.addEventListener('click', () => {if (currentPage > 0) { currentPage--; renderCards(); } });
+  prevBtn?.addEventListener('click', () => {
+  if (currentPage > 0) { 
+     currentPage--; renderCards(); 
+  } });
   nextBtn?.addEventListener('click', () => {
     currentPage = (currentPage + 1) % totalPages;
     renderCards();
@@ -270,17 +280,37 @@ const renderHome = (data) => `
   </div>
 
   <div class="slider-cards-container" style="position: relative;">
-    <button class="cardslider-nav prev"><span class="material-icons">chevron_left</span></button>
+    <button class="cardslider-nav prev">
+     <span class="material-icons">
+       chevron_left
+      </span>
+    </button>
     <div class="conteiner-card-info">
       ${data.infoCards.map(card => `
         <div class="card-info">
-          <div class="card-info__conteiner-images"><img src="${card.image}" class="card-info__images"></div>
-          <header><h2 class="card-info__span">${card.title}</h2></header>
-          <p class="card-info__paragraph">${card.description}</p>
-          <div><a href="${card.link}" class="card-info__a">Más Información</a></div>
+          <div class="card-info__conteiner-images">
+            <img src="${card.image}" class="card-info__images">
+          </div>
+          <header>
+            <h2 class="card-info__span">
+             ${card.title}
+            </h2>
+          </header>
+          <p class="card-info__paragraph">
+            ${card.description}
+          </p>
+          <div>
+            <a href="${card.link}" class="card-info__a">
+             Más Información
+            </a>
+          </div>
         </div>`).join('')}
     </div>
-    <button class="cardslider-nav next"><span class="material-icons">chevron_right</span></button>
+    <button class="cardslider-nav next">
+     <span class="material-icons">
+      chevron_right
+     </span>
+    </button>
   </div>
 `;
 
@@ -299,24 +329,29 @@ const renderLoginForm = (data) => {
             <div class="contact-from__conteiner-label">
               <label for="${input.id}" class="${input.labelClass}">${input.label}</label>
             </div>
-            <input type="${input.id.includes('password') ? 'password' : 'text'}" 
+            <input type="${input.id.includes('password') ? 
+            'password' : 'text'}" 
                    id="${input.id}" 
                    name="${input.name}" 
                    class="${input.class}">
           </div>
         `).join('')}
 
-        <p class="${form.forgotPasswordClass}"><a href="#">${form.forgotPasswordText}</a></p>
+        <p class="${form.forgotPasswordClass}">
+          <a href="#">${form.forgotPasswordText}
+        </a></p>
 
         <div class="contact-form__filed" id="Iniciar-Sesion">
-          <input class="${form.submitClass}" name="submit__login" type="submit" value="${form.submitText}">
+          <input class="${form.submitClass}" name="submit__login" 
+          type="submit" value="${form.submitText}">
         </div>
 
         <div class="contact-form__filed">
           <p>${form.socialLoginText}</p>
           <div class="contact-form__socials">
             ${form.socialButtons.map(button => `
-              <button type="button" class="${button.class}" onclick="location.href='${button.url}'">
+              <button type="button" class="${button.class}" 
+              onclick="location.href='${button.url}'">
                 <i class="${button.icon}"></i> ${button.text}
               </button>
             `).join('')}
@@ -361,17 +396,22 @@ const renderPepolePartition = (data) => `
         `).join('')}
       </div>
 
-      <h3 class="container__avatar__text">${data.aside.title}</h3>
+      <h3 class="container__avatar__text">
+       ${data.aside.title}
+      </h3>
 
       <p>${data.aside.description}</p>
          <h3 style="text-align: center;"> Mapa de Ubicación del Spa Termal Once</h3>
         <!-- Div del mapa agregado aquí -->
-        <div id="map" style="height:400px; width: 90vw; margin-left: auto; margin-right: auto; margin-top: 1.5rem;">
-       
+        <div id="map" style="height:400px; width: 90vw;
+         margin-left: auto; margin-right: auto; 
+         margin-top: 1.5rem;">
         </div>
 
       <div class="aside__contact-form">
-        <h3 class="aside__contact-form__title">${data.aside.contactForm.title}</h3>
+        <h3 class="aside__contact-form__title">
+         ${data.aside.contactForm.title}
+        </h3>
         <form class="${data.aside.contactForm.formClass}" action="index.php" method="POST">
           ${data.aside.contactForm.fields.map(field => `
             <div class="contact-form__group">
@@ -382,7 +422,9 @@ const renderPepolePartition = (data) => `
               }
             </div>
           `).join('')}
-          <button type="submit" name="submit_contact" class="${data.aside.contactForm.submitClass}">${data.aside.contactForm.submitText}</button>
+          <button type="submit" name="submit_contact" class="${data.aside.contactForm.submitClass}">
+          ${data.aside.contactForm.submitText}
+          </button>
         </form>
       </div>
     </aside>
@@ -406,7 +448,8 @@ const renderService = () => {
 
   // Crear el título y los textos
   const titleElement = createTextElement('h1', TITLE_TEXT);
-  const descriptionElement = createTextElement('p', DESCRIPTION_TEXT);
+  const descriptionElement = createTextElement('p', 
+  DESCRIPTION_TEXT);
   const retryElement = createTextElement('p', RETRY_TEXT);
 
 /**
@@ -442,7 +485,9 @@ const renderFooter = (data) => `
     ${data.footer.socialLinks.map(link => link.html).join('')}
   </div>
 
-  <p class="text_descrition">${data.footer.description}</p>
+  <p class="text_descrition">
+   ${data.footer.description}
+  </p>
 
   <div class="section__main">
     ${data.footer.sections.map(section => `
@@ -450,12 +495,17 @@ const renderFooter = (data) => `
         <header class="section__main--cards__header">
           <p class="text__title">${section.title}</p>
         </header>
-        ${section.content.map(text => `<p class="text">${text}</p>`).join('')}
+        ${section.content.map(text =>
+         `<p class="text">
+           ${text}
+          </p>`).join('')}
       </article>
     `).join('')}
   </div>
 
-  <p class="paragraph__Copyright">${data.footer.copyright}</p>
+  <p class="paragraph__Copyright">
+    ${data.footer.copyright}
+  </p>
 </footer>`;
 
 const renderRegisterForm = (data) => `
@@ -464,8 +514,12 @@ const renderRegisterForm = (data) => `
     <form class="${data.formClass}" action="index.php" method="post">
       ${data.formFields.map(field => `
         <div class="contact-form__filed">
-          <label for="${field.name}" class="${field.labelClass}">${field.label}:</label>
-          <input type="${field.type}" name="${field.name}" id="${field.name}" class="${field.inputClass}" ${field.required ? 'required' : ''} />
+          <label for="${field.name}" class="${field.labelClass}">
+            ${field.label}:
+          </label>
+          <input type="${field.type}" name="${field.name}" 
+          id="${field.name}" class="${field.inputClass}" 
+          ${field.required ? 'required' : ''} />
         </div>`).join('')}
       <fieldset class="${data.genderFieldsetClass}">
         <legend>Sexo:</legend>
@@ -473,13 +527,16 @@ const renderRegisterForm = (data) => `
           <div class="conteiner__radio">
             <div class="contact-form__filed radio">
               <label class="${opt.labelClass}">
-                <input type="radio" name="gender" value="${opt.value}" required /> ${opt.label}
+                <input type="radio" name="gender" value="${opt.value}"
+                required /> ${opt.label}
               </label>
             </div>
           </div>`).join('')}
       </fieldset>
       <div class="contact-form__filed submit">
-        <button type="submit" name="submit" class="${data.submitClass}">${data.submitText}</button>
+        <button type="submit" name="submit" class="${data.submitClass}">
+         ${data.submitText}
+        </button>
       </div>
     </form>
   </section>
@@ -489,31 +546,35 @@ const renderRegisterForm = (data) => `
 // Cargar página principal
 const renderPage = (route) => {
   if(route === 'login'){
-    fetch('./json/Data_SpaLogin.json').then(r => r.json()).then(d => { app.innerHTML = renderLoginForm(d); });
+    fetch('./json/Data_SpaLogin.json')
+    .then(r => r.json())
+    .then(d => { app.innerHTML = renderLoginForm(d); });
   } else if(route === 'register'){
-    fetch('./json/Data_SpaRegister.json').then(r => r.json()).then(d => { app.innerHTML = renderRegisterForm(d); });
-  
+    fetch('./json/Data_SpaRegister.json')
+    .then(r => r.json())
+    .then(d => { app.innerHTML = renderRegisterForm(d); });
   }else if (route === 'services'){ 
     app.innerHTML = renderService();
   } else {
     fetch('./json/Data_SpaIndex.json')
-  .then(r => r.json())
-  .then(d => {
-    app.innerHTML = renderHome(d);
-    requestAnimationFrame(() => {
+    .then(r => r.json())
+    .then(d => {
+      app.innerHTML = renderHome(d);
+      requestAnimationFrame(() => {
       setupImageSlider();
       setupCardSlider(d);
-    });
-  })
-  .then(() => fetch('./json/Data_SpaAboutMe.json'))
-  .then(r2 => r2.json())
-  .then(data2 => {
+     });
+   })
+   .then(() => fetch('./json/Data_SpaAboutMe.json'))
+   .then(r2 => r2.json())
+   .then(data2 => {
     app.insertAdjacentHTML('beforeend', renderPepolePartition(data2));
     generationMap();
   })
   .catch(err => console.error('Error cargando datos JSON:', err));
  }
 };
+
 // Cargar footer
 function loadFooter() {
   fetch('./json/Data_SpaLogin.json')
@@ -532,7 +593,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('popstate',()=> {
-  const route=new URL(window.location.href).searchParams.get('route')||'index';
+  const route=new URL(window.location.href).searchParams.get('route')
+  ||'index';
   renderPage(route);
 });
 
@@ -554,8 +616,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   	echo ValidationRegister::generateToastScript(
      	$registerResult['success'] ? 'success' : 'error',
-     	$registerResult['success'] ? '¡¡¡Registrado correctamente!!!' : 'No se pudo registrar.',
-     	$registerResult['success'] ? '#4caf50' : '#e74c3c'
+     	$registerResult['success'] ? 
+      '¡¡¡Registrado correctamente!!!' : 'No se pudo registrar.',
+     	$registerResult['success'] ?
+       '#4caf50' : '#e74c3c'
   	);
    }catch(PDOException $e) {
   	error_log("DB connection error: ". $e->getMessage());
@@ -611,22 +675,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if(isset($_POST['submit__login'])){
      	echo "zona de lógin.....";
-     	$login =new ValidationRegister();
-	$models =new ModelsLogin();
+     	$login =new ValidationLogin();
+	    $models =new ModelsLogin();
 
-	$login->login($models);
+	    $login->login($models);
 
-	if(!$login->FieldIsEmpty()){
-	    echo 'Login....';
-	    if(isset($_POST['submit-google'])){
-	      $login->SignLoginGoogle();
-	      $login->requestCode($_GET['code']);
+      $enable = $login->ValidationField(
+      $models->getEmail(),
+      $models->getPassword());
+      
+	    if(!$enable){
+	      echo 'Login....';
+	      if(isset($_POST['submit-google'])){
+	        $login->SignLoginGoogle();
+	        $login->requestCode($_GET['code']);
 	      
-	    }else if(isset($_POST['submit-facebook'])){
-	       echo 'Login facebook!!!';
-	    }	
-	}
-    }
+	      }else if(isset($_POST['submit-facebook'])){
+	         echo 'Login facebook!!!';
+	      }	
+	    }
+   }
 }
 ?>
 

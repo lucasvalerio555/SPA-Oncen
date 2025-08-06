@@ -22,8 +22,10 @@ class ValidationLogin {
 
         if (!empty($email) && !empty($password)) {
             echo "¡Correcto!";
-            sanetizacion($email,'/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            $password,'/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/');
+            sanetizacion($email,
+            '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+            $password,'/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'
+            );
             
         } else {
             echo "<script>
@@ -36,12 +38,18 @@ class ValidationLogin {
     /**
      * Ejemplo de sanitización de datos con expresiones regulares
      */
-    public function sanetizacion(string $email, string $rexmail, string $password, string $rexpassword): array {
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $password = filter_var($password, FILTER_SANITIZE_STRING);
+    public function sanetizacion(string $email, string $rexmail,
+     string $password, string $rexpassword): array {
+      
+        $email = filter_var($email, 
+        FILTER_SANITIZE_EMAIL);
+        $password = filter_var($password,
+        FILTER_SANITIZE_STRING);
 
-        $emailValido = preg_match($rexmail, $email);
-        $passwordValido = preg_match($rexpassword, $password);
+        $emailValido = preg_match($rexmail,
+         $email);
+        $passwordValido = preg_match($rexpassword,
+        $password);
 
         return [
             'email' => $emailValido ? $email : null,
@@ -85,7 +93,8 @@ class ValidationLogin {
                 $client->setAccessToken($token);
                 $_SESSION['access_token'] = $token;
 
-                $service = new Google_Service_Oauth2($client);
+                $service = new Google_Service_Oauth2(
+                $client);
                 $user = $service->userinfo->get();
 
                 $_SESSION['user'] = [
@@ -96,10 +105,11 @@ class ValidationLogin {
                 ];
                 //return true;
                 // Redirigir a zona segura
-		header('Location: index.php?route=dashborad');
-		exit;
+		        header('Location: index.php?route=dashborad');
+		        exit;
             } else {
-                error_log('Error al obtener el token: ' . $token['error']);
+                error_log('Error al obtener el token: ' .
+                $token['error']);
                 return false;
             }
         } catch (Exception $e) {
