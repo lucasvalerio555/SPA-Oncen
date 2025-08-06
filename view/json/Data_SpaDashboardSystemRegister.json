@@ -1,0 +1,43 @@
+{
+  "formTitle": "Registrar Sistema",
+  "inputs": [
+    { "type": "text", "id": "firstName", "name": "firstName", "placeholder": "Nombre", "required": true },
+    { "type": "text", "id": "lastName", "name": "lastName", "placeholder": "Apellido", "required": true },
+    { "type": "text", "id": "phone", "name": "phone", "placeholder": "Teléfono", "required": true },
+    { "type": "email", "id": "email", "name": "email", "placeholder": "Correo", "required": true },
+    { "type": "password", "id": "confirmPassword", "name": "confirmPassword", "placeholder": "Confirmar contraseña", "required": true },
+    { "type": "password", "id": "password", "name": "password", "placeholder": "Contraseña", "required": true }
+  ],
+  "radios": {
+    "label": "Rol del sistema",
+    "name": "role",
+    "options": [
+      { "id": "admin", "value": "admin", "label": "Administrador/a", "checked": true },
+      { "id": "manager", "value": "manager", "label": "Gerente/a" },
+      { "id": "client", "value": "client", "label": "Cliente/a" }
+    ]
+  },
+  "search": {
+    "title": "Buscar Sistema",
+    "input": {
+      "type": "search",
+      "id": "searchSystem",
+      "name": "searchSystem",
+      "placeholder": "Buscar por nombre o ID",
+      "required": true
+    },
+    "button": {
+      "text": "Nuevo usuario",
+      "class": "btn btn-secondary"
+    }
+  },
+  "table": {
+    "headers": ["ID", "Nombre", "Apellido", "Rol", "Estado"],
+    "rows": [
+      { "id": 1, "nombre": "Juan", "apellido": "Pérez", "rol": "Administrador", "estado": "Activo" },
+      { "id": 2, "nombre": "Ana", "apellido": "Gómez", "rol": "Gerente", "estado": "Inactivo" },
+      { "id": 3, "nombre": "Carlos", "apellido": "López", "rol": "Cliente", "estado": "Activo" }
+    ]
+  }
+}
+

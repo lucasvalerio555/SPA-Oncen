@@ -320,20 +320,130 @@ const RenderDashboardClient = (data) => {
       
       };
       
-      const RenderDashboardRegisterSystem=(data)=>{
+      
+   const RenderDashboardRegisterSystem = (data) => {
+  const container = document.getElementById("dashboard-content");
+  if (!container) return;
+
+  const inputsHTML = data.field.map(campo => `
+    <div class="form__group">
+      <input type="${campo.type}" id="${campo.id}" name="${campo.name}" placeholder="${campo.placeholder}" required>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="container__form">
+      <form action="#" class="form__register">
+        <h2 class="form__title">Registrar Sistema</h2>
+
+        ${inputsHTML}
+
+        <div class="form__group group__radio">
+          <p>Rol del sistema</p>
+          <div class="container__items__radio">
+            <label><input type="radio" name="role" value="admin" checked> Administrador/a</label>
+            <label><input type="radio" name="role" value="manager"> Gerente/a</label>
+            <label><input type="radio" name="role" value="client"> Cliente/a</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </form>
+
+      <div class="contaner__search__table">
+        <h2 class="form__title">Buscar Sistema</h2>
+
+        <form action="#" class="form__search">
+          <div class="form__group">
+            <input type="search" id="searchSystem" name="searchSystem" placeholder="Buscar por nombre o ID" required>
+          </div>
+          <button type="submit" class="btn btn-secondary">Nuevo usuario</button>
+        </form>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Rol</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${
+              data.length > 0
+                ? data.map(item => `
+                    <tr>
+                      <td>${item.id}</td>
+                      <td>${item.nombre}</td>
+                      <td>${item.apellido}</td>
+                      <td>${item.rol}</td>
+                      <td>${item.estado}</td>
+                    </tr>
+                  `).join("")
+                : `<tr><td colspan="5">No hay datos disponibles</td></tr>`
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+};
+
+      
+      const RenderDashboardLog=(data)=>{
       
       
       };
-      
-      const RenderDashboardLogin=(data)=>{
-      
-      
-      };
-      
-      const RenderDashboardSystemRol=(data)=>{
-      
-      
-      };
+ 
+const RenderDashboardSystemRol = (data) => {
+  const main = document.createElement("main");
+
+  // Header principal con textos desde JSON
+  const header = document.createElement("header");
+  header.className = "main__header";
+  header.innerHTML = `
+    <h1 class="main__title">${data.titulos.bienvenida}</h1>
+    <p>${data.titulos.subbienvenida}</p>
+  `;
+
+  // Sección de roles
+  const section = document.createElement("section");
+  section.className = "dashboard__card_rol";
+  section.innerHTML = `<h2 class="dashboard__title">${data.titulos.roles}</h2>`;
+
+  // Tarjetas de roles
+  data.roles.forEach((rol) => {
+    const article = document.createElement("article");
+    article.className = "dashboard__article_rol";
+    article.innerHTML = `
+      <header class="article__header_rol">
+        <div class="role-icon">${rol.icon}</div>
+        <h3 class="card_rol__title">${rol.title}</h3>
+      </header>
+      <p>${rol.description}</p>
+    `;
+    section.appendChild(article);
+  });
+
+  // Aside con información extra desde JSON
+  const aside = document.createElement("aside");
+  aside.innerHTML = `
+    <h3>${data.informacion.titulo}</h3>
+    <p>${data.informacion.descripcion}</p>
+    <a href="#">Conectar</a>
+  `;
+
+  // Agregar al DOM
+  main.appendChild(header);
+  main.appendChild(section);
+
+  document.body.innerHTML = "";
+  document.body.appendChild(main);
+  document.body.appendChild(aside);
+};
+
       
       const RenderDashboardReserva=(data)=>{
       
@@ -374,6 +484,19 @@ const dashboardRoutes = [
     render: RenderDashboardDuration,
     error: 'Error al cargar el JSON de duración del servicio',
   },
+  
+  {
+    json: '../view/json/Data_SpaDashboardSystemRegister.json'
+    render: RenderDashboardSystemRegister,
+    error: 'Error al cargar el JSON de Registro del Usuario',
+  },
+  
+  {
+    json: '../view/json/Data_SpaDasboardRoles.json'
+    render: RenderDashboardSystemRol,
+    error: 'Error al cargar el JSON de Roles de Systema.',
+  
+  }
 ];
 
 // Función reutilizable para cargar JSON y renderizar
