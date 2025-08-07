@@ -607,10 +607,36 @@
 				}
 			};
 
-			const renderPage=(route) =>{
-			   // Ejecutar todos los dashboards que apliquen
-				dashboardRoutes.forEach(route => loadDashboard(route));
-			};
+			const renderPage = (route) => {
+  const contentRouter = {
+    'Reserva': 'Realizar Reserva',
+    'Ver Reserva': 'Ver Reserva',
+    'Ver Servicio': 'Ver Servicio',
+    'Rol': 'Roles de Sistema',
+    'Registrar': 'Registrar Usuarios',
+    'Modificar': 'Modificar Precio',
+    'Imprimir': 'Imprimir Reserva',
+    'Configuracion': 'Configuraciones',
+    'cerrar': 'Cerrar Sesión',
+  };
+
+  const routeName = contentRouter[route]; // Ej: "Realizar Reserva"
+
+  if (!routeName) {
+    console.warn(`Ruta no encontrada: ${route}`);
+    return;
+  }
+
+  // Buscar si alguna ruta JSON tiene lógica para esta sección
+  for (const item of dashboardRoutes) {
+    if (item.json.toLowerCase().includes(route.toLowerCase())) {
+      loadDashboard(item);
+      return;
+    }
+  }
+
+  console.warn(`No se encontró lógica para la ruta: ${route}`);
+};
 
 			window.addEventListener('popstate',()=> {
   			const route=new URL(window.location.href).searchParams
