@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Panel Administrador - Reservas</title>
+	<title>Panel Administrador</title>
 
 	<!-- Iconos y fuentes -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -19,325 +19,6 @@
 	<!-- Estilos -->
 	<link rel="stylesheet" href="../css/normalize.css" />
 	<link rel="stylesheet" href="../css/style.css" />
-
-	<!-- Estilos específicos para reservas -->
-	<style>
-		/* Estilos generales */
-		* {
-			box-sizing: border-box;
-		}
-
-		.container__form {
-			max-width: 530px;
-			width: 100%;
-			height: auto;
-			overflow-y: auto;
-			background: #fff;
-			border-radius: 2rem;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-			position: relative;
-			padding-bottom: 20px;
-			margin: 0 auto;
-			margin-top: 2rem;
-		}
-
-		/* Contenedores horizontales para formulario */
-		.container_form_group {
-			display: flex;
-			gap: 1rem;
-			padding: 0 1.5rem;
-			margin-bottom: 1rem;
-		}
-
-		.container_form_group .form_group {
-			flex: 1;
-			padding-left: 0;
-			padding-right: 0;
-		}
-
-		/* Estilos generales para grupos de formulario */
-		.form_group {
-			margin-bottom: 1rem;
-			flex: 1;
-			padding-left: 1rem;
-			padding-right: 1rem;
-		}
-
-		.form_group label {
-			display: block;
-			color: #333;
-			font-weight: 500;
-			margin-bottom: 5px;
-			font-size: 0.9rem;
-		}
-
-		.form_group input,
-		.form_group select,
-		.form_group textarea {
-			width: 100%;
-			padding: 10px;
-			border: 2px solid #e0e0e0;
-			border-radius: 8px;
-			font-size: 0.9rem;
-			transition: border-color 0.3s ease;
-			background: #fff;
-		}
-
-		.form_group input:focus,
-		.form_group select:focus,
-		.form_group textarea:focus {
-			outline: none;
-			border-color: #82c262;
-			box-shadow: 0 0 0 3px rgba(130, 194, 98, 0.1);
-		}
-
-		.form_group textarea {
-			height: 80px;
-			resize: vertical;
-			font-family: inherit;
-		}
-
-		.form_group button {
-			background: #82C262;
-			border: none;
-			color: #fff;
-			padding: 12px 30px;
-			border-radius: 8px;
-			cursor: pointer;
-			font-size: 1rem;
-			font-weight: 500;
-			transition: background 0.3s ease, transform 0.2s ease;
-		}
-
-		.form_group button:hover {
-			background: #6fa851;
-			transform: translateY(-1px);
-		}
-
-		/* Indicadores de tarjeta */
-		.card-indicators {
-			display: flex;
-			justify-content: center;
-			gap: 8px;
-			margin: 20px 0;
-			padding: 0 20px;
-			margin-top: 3rem;
-		}
-
-		.indicator {
-			width: 8px;
-			height: 8px;
-			border-radius: 50%;
-			background: #ddd;
-			cursor: pointer;
-			transition: background 0.3s ease;
-		}
-
-		.indicator.active {
-			background: #82c262;
-		}
-
-		/* Tarjetas */
-		.container-card {
-			position: relative;
-			height: 220px;
-			margin-bottom: 30px;
-		}
-
-		.group_form {
-			position: absolute;
-			bottom: -3rem;
-			left: 6rem;
-		}
-
-		.group_form > button {
-			width: 150px;
-		}
-
-		/* Base card styles */
-		.card {
-			width: 100%;
-			max-width: 430px;
-			height: 190px;
-			border-radius: 1.2rem;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-			padding: 20px;
-			color: #fff;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.5s ease, transform 0.5s ease;
-			background-size: cover;
-			background-repeat: no-repeat;
-			z-index: 60;
-		}
-
-		.card.active {
-			opacity: 1;
-			pointer-events: all;
-		}
-
-		/* Fondos para diferentes tarjetas */
-		.card.mastercard {
-			background-color: #000;
-		}
-
-		.card.visa {
-			background: linear-gradient(135deg, #0065b7, #00499b);
-		}
-
-		.card.oca {
-			background: linear-gradient(to bottom, #4FB3E1 0%, #87CEEB 30%, #B0E0E6 100%);
-		}
-
-		.card.bbva {
-			background: linear-gradient(135deg, #004481, #0066cc);
-		}
-
-		.card.prex {
-			background: linear-gradient(135deg, #1e3c72, #2a5298);
-		}
-
-		/* Contenido de las tarjetas */
-		.card-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: flex-start;
-		}
-
-		.card-brand {
-			font-size: 1.5rem;
-			font-weight: bold;
-			text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-		}
-
-		.container__chips {
-			width: 50px;
-			height: 35px;
-			border-radius: 4px;
-			background: linear-gradient(135deg, #f6e27a, #e3b647, #c89e29);
-			box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
-			position: relative;
-		}
-
-		.chip-contact {
-			position: absolute;
-			background: #333;
-			border-radius: 1px;
-		}
-
-		.chip-left { width: 8px; height: 20px; top: 7px; left: 5px; }
-		.chip-center { width: 20px; height: 20px; top: 7px; left: 15px; }
-		.chip-right { width: 8px; height: 20px; top: 7px; right: 5px; }
-
-		.card-number input {
-			font-family: 'Courier New', monospace;
-			font-size: 1.4rem;
-			letter-spacing: 2px;
-			text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-			background: transparent;
-			border: none;
-			color: #fff;
-			width: 100%;
-		}
-
-		.card-footer {
-			display: flex;
-			justify-content: space-between;
-			align-items: flex-end;
-		}
-
-		.card-holder, .card-expiry {
-			font-size: 0.8rem;
-			text-transform: uppercase;
-			text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-		}
-
-		.card-logos {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-		}
-
-		.logo-circle {
-			width: 25px;
-			height: 25px;
-			border-radius: 50%;
-		}
-
-		.logo-red { background: #eb001b; }
-		.logo-orange { background: #f79e1b; }
-
-		/* Controles de navegación de las tarjetas */
-		.slider {
-			list-style: none;
-			display: flex;
-			justify-content: space-between;
-			position: absolute;
-			width: 100%;
-			height: 50px;
-			top: 50%;
-			transform: translateY(-50%);
-			align-items: center;
-			padding: 0 15px;
-			margin: 0;
-			z-index: 65;
-		}
-
-		.slider_left, .slider_rigth {
-			cursor: pointer;
-			background: rgba(255, 255, 255, 0.95);
-			border-radius: 50%;
-			width: 45px;
-			height: 45px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-			transition: background 0.3s ease, transform 0.2s ease;
-			user-select: none;
-		}
-
-		.slider_left:hover, .slider_rigth:hover {
-			background: #82c262;
-			transform: scale(1.15);
-		}
-
-		.slider svg {
-			fill: #333;
-			width: 24px;
-			height: 24px;
-		}
-
-		.slider_left:hover svg, .slider_rigth:hover svg {
-			fill: #fff;
-		}
-
-		@media (max-width: 768px) {
-			.container_form_group {
-				flex-direction: column;
-			}
-			
-			.container__form {
-				max-width: 95%;
-				margin-top: 1rem;
-			}
-			
-			.group_form {
-				position: relative;
-				left: auto;
-				bottom: auto;
-				text-align: center;
-				margin-top: 1rem;
-			}
-		}
-	</style>
 </head>
 
 <body>
@@ -362,7 +43,7 @@
 				</div>
 
 				<li class="menu__bar__li">
-					<a class="menu__bar__a" href="#" onclick="loadReservaForm()">
+					<a class="menu__bar__a" href="reserva.php">
 						<span class="material-icons-outlined material__move__slider">
 						 edit_calendar
 						</span>
@@ -395,468 +76,1017 @@
 		</nav>
 
 		<!-- Contenido principal -->
-		<main class="main" id="app">
-			<!-- Aquí se cargará el contenido dinámico -->
-			<div style="text-align: center; padding: 2rem; color: #666;">
-				<h2>Bienvenido al Panel de Administración</h2>
-				<p>Selecciona "Realizar Reserva" del menú para comenzar.</p>
-			</div>
-		</main>
+		<main class="main" id="app"></main>
 
 		<!-- Scripts -->
 		<script>
 			const app = document.getElementById('app');
 
-			// Función RenderDashboardReserva adaptada
-			const RenderDashboardReserva = (data) => {
+			const RenderDasboardAdmin = (data) => {
 				const {
-					header,
-					cards,
-					formFields,
-					cardTypes,
-					navigation
-				} = data.reserva;
+					card,
+					services
+				} = data.dashboard;
 
-				// Generar HTML para las tarjetas
-				const cardsHTML = cards.map((card, index) => `
-					<div class="card ${card.type} ${index === 0 ? 'active' : ''}" data-card="${card.type}">
-						<div class="card-header">
-							<div class="card-brand">${card.brand}</div>
-							<div class="container__chips">
-								<div class="chip-contact chip-left"></div>
-								<div class="chip-contact chip-center"></div>
-								<div class="chip-contact chip-right"></div>
-							</div>
-						</div>
-						<div class="card-number">
-							<input type="text" value="${card.number}" maxlength="19">
-						</div>
-						<div class="card-footer">
-							<div class="card-holder">${card.holder}</div>
-							<div class="card-expiry">${card.expiry}</div>
-							<div class="card-logos">
-								${card.logos ? card.logos.map(logo => `
-									<div class="logo-circle logo-${logo}"></div>
-								`).join('') : `<div style="font-weight: bold; font-size: 1.2rem;">${card.brand}</div>`}
-							</div>
-						</div>
-					</div>
-				`).join('');
-
-				// Generar indicadores de tarjetas
-				const indicatorsHTML = cards.map((_, index) => `
-					<div class="indicator ${index === 0 ? 'active' : ''}" data-target="${index}"></div>
-				`).join('');
-
-				// Generar opciones del select de tarjetas
-				const cardOptionsHTML = cardTypes.map(type => `
-					<option value="${type.value}">${type.label}</option>
-				`).join('');
-
-				// Generar opciones del select de servicios
-				const serviceOptionsHTML = formFields.servicio.options.map(option => `
-					<option value="${option.value}">${option.label}</option>
-				`).join('');
+				const settingsHTML = Array.from({
+					length: card.settingsCount
+				}, () => `
+				<div class="item__setting"></div>
+			   `).join('');
+				const servicesHTML = services.images.map(img => `
+	  			<div class="server__card__container__images">
+				  <img src="${img.src}" class="server__card__container__images__images" 
+				  alt="${img.alt}">
+	 		    </div>
+			   `).join('');
 
 				app.innerHTML = `
-					<div class="container__form">
-						<form id="reservaForm">
-							<article class="container-card">
-								<ul class="slider">
-									<li class="slider_left" id="left">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-											<path d="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z"/>
-										</svg>
-									</li>
-									<li class="slider_rigth" id="right">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-											<path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z"/>
-										</svg>
-									</li>
-								</ul>
+	  			<div class="container__card__space">
+				  <div class="card__space">
+		  			<div class="container__icon__setting">
+					 ${settingsHTML}
+		  			</div>
+		  		  <div class="card__space__conatainer__images">
+				   <img src="${card.imageSrc}" alt="Logo Spa">
+		  		</div>
+		  		<p>${card.title}</p>
+		  		<p class="card__text">
+				  ${card.message}
+				</p>
+		  		<div class="card__space_conainer_form">
+		         <form action="dashboardUser.php" method="POST">
+		  		  <input type="text" placeholder="${card.placeholder}">
+		  		  <button type="submit">
+			      <span class="material-symbols-outlined icon__button">
+				    send
+				  </span>
+		  		  </button>
+				</form>
+		 	  </div>
+			 </div>
+	 	   </div>
 
-								${cardsHTML}
+	  	  <div class="server__card">
+			 <p class="card__title">${services.title}</p>
+			  ${servicesHTML}
+			 <div class="container-chart">
+		  	   <canvas id="${services.chartId}"></canvas>
+			 </div>
+	  	    </div>
+				`;
+			};
 
-								<div class="form_group group_form">
-									<button type="button" id="reserva">${navigation.reserva}</button>
-									<button type="button" id="acompanante">${navigation.acompanante}</button>
-								</div>
-							</article>
-							
-							<!-- Indicadores de tarjeta -->
-							<div class="card-indicators">
-								${indicatorsHTML}
-							</div>
+			const RenderDashboardManager = (data) => {
+				const RenderDashboardManager = (data) => {
+					const {
+						resumen,
+						reservas
+					} = data.manager;
 
-							<!-- Campos del formulario -->
-							<div class="container_form_group">
-								<div class="form_group">
-									<label for="nombre">${formFields.nombre.label}:</label>
-									<input type="text" id="nombre" name="nombre" placeholder="${formFields.nombre.placeholder}" required>
-								</div>
-
-								<div class="form_group">
-									<label for="apellido">${formFields.apellido.label}:</label>
-									<input type="text" id="apellido" name="apellido" placeholder="${formFields.apellido.placeholder}" required>
-								</div>
-							</div>
-
-							<div class="container_form_group">
-								<div class="form_group">
-									<label for="fecha">${formFields.fecha.label}:</label>
-									<input type="date" id="fecha" name="fecha" required>
-								</div>
-
-								<div class="form_group">
-									<label for="hora">${formFields.hora.label}:</label>
-									<input type="time" id="hora" name="hora" required>
-								</div>
-							</div>
-
-							<div class="container_form_group">
-								<div class="form_group">
-									<label for="servicio">${formFields.servicio.label}:</label>
-									<select id="servicio" name="servicio" required>
-										<option value="">${formFields.servicio.defaultOption}</option>
-										${serviceOptionsHTML}
-									</select>
-								</div>
-
-								<div class="form_group">
-									<label for="pdf">${formFields.pdf.label}:</label>
-									<select id="pdf" name="pdf">
-										<option value="si">Sí</option>
-										<option value="no">No</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form_group">
-								<label for="tarjeta">${formFields.tarjeta.label}:</label>
-								<select id="tarjeta" name="tarjeta">
-									${cardOptionsHTML}
-								</select>
-							</div>
-
-							<div class="form_group">
-								<label for="comentarios">${formFields.comentarios.label}:</label>
-								<textarea id="comentarios" name="comentarios" placeholder="${formFields.comentarios.placeholder}"></textarea>
-							</div>
-
-							<div class="form_group">
-								<button type="submit">${header.submitButton}</button>
-							</div>
-						</form>
+					const resumenHTML = `
+						<h2>
+						  Panel de Control
+						</h2>
+					   <div class="info-container">
+						   <ul class="info-ul">
+							 <li class="info-ul__li">
+							 reservas de hoy: <strong>
+							${resumen.reservasHoy}
+							</strong>
+						   </li>
+						 <li class="info-ul__li">
+						  Ingreso: <strong>
+						   ${resumen.ingreso}
+						  </strong>
+						  </li>
+					   <li>
+						 Capacidad ocupada: <strong>
+					   ${resumen.capacidad}
+					  </strong>
+					  </li>
+					 </ul>
 					</div>
+				  `;
+
+					const reservasHTML = reservas.map(reserva => `
+				  <tr>
+				  <td>
+					${reserva.servicio}
+				 </td>
+				  <td>
+					${reserva.fecha}
+				 </td>
+				  <td>
+				   ${reserva.precio}
+				   </td>
+			   </tr>
+				`).join('');
+
+					app.innerHTML = `
+			  <div class="dashboard">
+				   <article class="dashboard__article">
+				   <header class="dashboard__header">
+					${resumenHTML}
+				   </header>
+				 <div class="chart-container-manager">
+				  <canvas id="Chart"></canvas>
+				</div>
+			   </article>
+
+			  <article class="dashboard__article">
+			  <header class="dashboard__header">
+			   <h3>Reservas</h3>
+				 </header>
+
+				<table>
+		   <thead>
+		  <tr>
+			<th>Servicio</th>
+			<th>Fecha</th>
+			<th>Precio</th>
+		  </tr>
+		</thead>
+		 <tbody>
+			 ${reservasHTML}.addEventListener('click', () => {
+			 ${reservasHTML}.innerHTML = 
+			 '<input type="text">';
+				${reservasHTML}.focus();
+				${reservasHTML}.innerHTML = '<button>Guardar</button>';
+				${reservasHTML}.innerHTML = '<button>Cancelar</button>';
+			 });
+			 </tbody>
+		 </table>
+		</article>
+	  </div>
+		  `;
+				};
+			};
+
+
+			const RenderDashboardClient = (data) => {
+				const {
+					servicios,
+					comentarios
+				} = data.client;
+				const serviciosHTML = servicios.map(servicio => `
+				 <article class="card">
+					 <header>
+					 <div class="container__images">
+						 <img src="${servicio.imagen}" alt="Avatar" 
+					   class="imagen ${servicio.alt}">
+					 </div>
+					<h2 class="card__title">
+					   ${servicio.titulo}
+					</h2>
+				  </header>
+				  <p class="card__text">
+				 ${servicio.descripcion}
+				</p>
+			  </article>
+			`).join('');
+				const comentariosHTML = comentarios.map(c => `
+			<p>${c}</p>
+			 `).join('');
+
+				app.innerHTML = `
+			<section class="section__card">
+				${serviciosHTML}
+			</section>
+
+		   <section class="section__card__commit section__commit">
+			   <article class="card__commit commit__card">
+			  <h2>Comentarios...</h2>
+				<div class="container__icon__setting icon__container">
+				   <div class="item__setting items__setting"></div>
+					 <div class="item__setting items__setting"></div>
+					  <div class="item__setting items__setting"></div>
+				 </div>
+
+			 <div class="container__commit commit__container">
+				<form action="#" class="form__commit commit__form" method="post">
+				<input type="text" class="container__commit--input" placeholder="Dejar un Comentario..." />
+				<button class="container__commit--input__submit image_send">
+					<span class="material-symbols-outlined icon__button">send</span>
+			   </button>
+			  <div class="container__commit__containaer__like">
+			   <span class="material-symbols-outlined">thumb_up</span>
+			   <span class="material-symbols-outlined">thumb_down</span>
+			  </div>
+			 </form>
+		  </div>
+			${comentariosHTML}
+		   </article>
+		</section>
+		  `;
+			};
+
+
+			const RenderDashboardDuration = (data) => {
+				const container = document.createElement("div");
+
+				// Header principal
+				const header = document.createElement("header");
+				header.className = "main__header header__main";
+
+				const svgIcon = (data.header.svg && data.header.svg.enabled && data.header.svg.markup) ?
+					data.header.svg.markup :
+					"";
+
+				header.innerHTML = `
+				 <h1>
+					${svgIcon}
+					${data.header.title}
+				</h1>
+				  <p>
+					 ${data.header.description}
+				   </p>
+				  <span>
+					 ${data.header.endTimeDisplay}
+				  </span>
+				  `;
+				container.appendChild(header);
+
+				// Sección dashboard
+				const dashboard = document.createElement("section");
+				dashboard.className = "dashboard";
+
+				dashboard.innerHTML = `
+				<div class="dashboard__card">
+					<h2 class="dashboard__title">
+					${data.reservation.label}
+				  </h2>
+				   <input type="time" id="end-time" name="end-time"
+				  value="${data.reservation.timeInputValue}" 
+				  step="${data.reservation.timeStep}">
+				</div>
+				  `;
+
+				// Contenedor de servicios
+				const serviceContainer = document.createElement("div");
+				serviceContainer.className = "container__service";
+				serviceContainer.innerHTML = `<h3>Servicio Elegido:</h3>`;
+
+				const selectionService = document.createElement("section");
+				selectionService.className = "selection__service";
+
+				(data.services || []).forEach(service => {
+					const card = document.createElement("article");
+					card.className = "crad__service";
+
+					card.innerHTML = `
+					  <header class="header__servicio">
+					 <div class="service__container__images">
+					   <img src="${service.image}"
+					   class="server__card__container__images__images" 
+					   alt="${service.alt || service.title}">
+					 </div>
+					   <h3>${service.title}</h3>
+					  </header>
+					<div>
+					<p>${service.description}</p>
+					</div>
+				  `;
+
+					selectionService.appendChild(card);
+				});
+
+				serviceContainer.appendChild(selectionService);
+				dashboard.appendChild(serviceContainer);
+				container.appendChild(dashboard);
+
+				// Insertar en el DOM
+				const root = document.getElementById("app") ||
+					document.body;
+				root.innerHTML = "";
+				root.appendChild(container);
+			};
+
+
+
+			const RenderDashboardprint = (data) => {
+
+
+			};
+
+
+			const RenderDashboardServer = (data) => {
+
+			};
+
+
+			const RenderDashboardRegisterSystem = (data) => {
+			  const container = document.getElementById("dashboard-content");
+					if (!container) return;
+					  const inputsHTML = data.field.map(campo => `
+					  <div class="form__group">
+						<input type="${campo.type}" 
+						 id="${campo.id}" name="${campo.name}" 
+						 placeholder="${campo.placeholder}" 
+						 required>
+					   </div>
+					   `).join('');
+
+					   container.innerHTML = `
+					   <div class="container__form">
+						 <form action="#" class="form__register">
+							<h2 class="form__title">
+							  Registrar Sistema
+							</h2>
+								${inputsHTML}
+							<div class="form__group group__radio">
+							  <p>Rol del sistema</p>
+								<div class="container__items__radio">
+								  <label>
+									<input type="radio" name="role" value="admin"
+									checked> 
+									Administrador
+								  </label>
+								  <label>
+									<input type="radio" name="role" 
+									value="manager">
+									Gerente
+									</label>
+									<label>
+									<input type="radio" name="role" 
+									value="client">
+										Cliente
+										</label>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-primary">
+								 Registrar
+								</button>
+							  </form>
+
+							  <div class="contaner__search__table">
+							    <h2 class="form__title">
+								  Buscar Sistema
+							    </h2>
+							   <form action="#" class="form__search">
+								 <div class="form__group">
+								  <input type="search" id="searchSystem" 
+								  name="searchSystem"
+								  placeholder="Buscar por nombre o ID" 
+								  required>
+						    	</div>
+							    <button type="submit" class="btn btn-secondary">
+								 Nuevo usuario
+							    </button>
+						      </form>
+
+						     <table>
+							   <thead>
+							  <tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Rol</th>
+								<th>Estado</th>
+							   </tr>
+							 </thead>
+						    <tbody>
+						    ${data.length > 0 ? data.map(item => `
+							 <tr>
+							 <td>${item.id}</td>
+							 <td>${item.nombre}</td>
+							 <td>${item.apellido}</td>
+							 <td>${item.rol}</td>
+							 <td>${item.estado}</td>
+							</tr>
+						   `).join("") : `<tr>
+							<td colspan="5">
+								No hay datos disponibles
+							</td>
+							</tr>`
+									}
+						  </tbody>
+						</table>
+					  </div>
+					</div>
+			   `;		
+			};
+
+
+			const RenderDashboardLog = (data) => {
+
+
+			};
+
+			const RenderDashboardSystemRol = (data) => {
+				const main = document.createElement("main");
+
+				// Header principal con textos desde JSON
+				const header = document.createElement("header");
+				header.className = "main__header";
+				header.innerHTML = `
+				<h1 class="main__title">
+					${data.titulos.bienvenida}
+				</h1>
+				<p>
+				${data.titulos.subbienvenida}
+				</p>
+				  `;
+
+				// Sección de roles
+				const section = document.createElement("section");
+				section.className = "dashboard__card_rol";
+				section.innerHTML = `<h2 class="dashboard__title">
+				  ${data.titulos.roles}
+				</h2>`;
+
+				// Tarjetas de roles
+				data.roles.forEach((rol) => {
+					const article = document.createElement("article");
+					article.className = "dashboard__article_rol";
+					article.innerHTML = `
+					  <header class="article__header_rol">
+					  <div class="role-icon">
+					  ${rol.icon}
+					  </div>
+					 <h3 class="card_rol__title">
+						 ${rol.title}
+					 </h3>
+					</header>
+					<p>${rol.description}</p>
+				   `;
+					section.appendChild(article);
+				});
+
+				// Aside con información extra desde JSON
+				const aside = document.createElement("aside");
+				aside.innerHTML = `
+				<h3>
+				  ${data.informacion.titulo}
+				</h3>
+				<p>
+				  ${data.informacion.descripcion}
+				</p>
+				<a href="#">Conectar</a>
+				  `;
+
+				// Agregar al DOM
+				main.appendChild(header);
+				main.appendChild(section);
+
+				document.body.innerHTML = "";
+				document.body.appendChild(main);
+				document.body.appendChild(aside);
+			};
+
+
+			const RenderDashboardReserva = (data) => {
+				// Generación de la vista de reservas
+			     const reservaData = data.reserva;
+			     // Generar HTML para las tarjetas
+			     const cardsHTML = reservaData.cards.map((card, index) => {	
+			       const logosHTML = card.logos ? card.logos.map(logo =>
+			        `<div class="logo-circle logo-${logo}">
+			        </div>`).join('') :
+			        `<div style="font-weight: bold; font-size: 1.2rem;">
+			           ${card.brand}
+			         </div>`;
+			         
+			     return `
+			        <div class="card ${card.type} ${index === 0 ? 'active' : ''}"
+			         data-card="${card.type}"> 
+			         <div class="card-header">
+			           <div class="card-brand">
+			             ${card.brand}
+			           </div>   
+			           <div class="container__chips">
+				    <div class="chip-contact chip-left"></div>
+				    <div class="chip-contact chip-center"></div>
+				    <div class="chip-contact chip-right"></div>
+				   </div>
+			          <div class="card-number">
+				    <input type="text" value="${card.number}" maxlength="19">
+				 </div>
+				 <div class="card-footer">
+				   <div class="card-holder">
+				     ${card.holder}
+				  </div>
+				  <div class="card-expiry">
+				    ${card.expiry}
+				  </div>
+				  <div class="card-logos">
+				    ${logosHTML}
+				  </div>
+				</div>
+			      </div>
+			       `;
+			   }).join('');
+			   
+			   // Generar indicadores de tarjetas
+			   const indicatorsHTML = reservaData.cards.map((_, index) => 
+			     `<div class="indicator ${index === 0 ? 'active' : ''}" data-target="${index}">
+			      </div>`
+			  ).join('');
+			  
+			  // Generar opciones del select de tarjetas
+			  const cardOptionsHTML = reservaData.cardTypes.map(type => 
+			   `<option value="${type.value}">${type.label}</option>`
+			  ).join('');
+			  
+			  // Generar opciones del select de servicios
+			  const serviceOptionsHTML = reservaData.formFields.servicio.options.map(option => 
+			   `<option value="${option.value}">${option.label}</option>`
+			  ).join('');
+			  
+			  // Renderizar el formulario completo
+			  app.innerHTML = `
+			    <div class="container__form">
+			    <!-- Encabezado del formulario -->
+			      <div class="form-header">
+				<h1>${reservaData.header.title}</h1>
+				<h2>${reservaData.header.subtitle}</h2>
+			      </div>
+
+			      <form id="reservaForm">
+			      <!-- Sección de tarjetas -->
+				  <article class="container-card">
+				    <ul class="slider">
+				     <li class="slider_left" id="left">
+					<svg xmlns="http://www.w3.org/2000/svg" 													
+					width="24" height="24">
+				          <path d="M15.293 3.293 6.586 12l8.707 8.7071.414-1.414L9.41 		12l7.293-7.293-1.414-1.414z"/>
+					</svg>
+				     </li>
+				     <li class="slider_rigth" id="right">
+					<svg xmlns="http://www.w3.org/2000/svg" 
+					  width="24" height="24">
+				           <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z"/>
+					   </svg>
+				      </li>
+				   </ul>
+				     ${cardsHTML}
+				   <div class="form_group group_form">
+				    <button type="button" id="reserva">
+				     ${reservaData.navigation.reserva}
+				    </button>
+				    
+				    <button type="button" id="acompanante">
+				     ${reservaData.navigation.acompanante}
+				    </button>
+				  </div>
+			        </article>			
+				<!-- Indicadores de tarjeta -->
+				<div class="card-indicators">
+				  ${indicatorsHTML}
+				</div>
+				<!-- Campos del formulario -->
+				<div class="container_form_group">
+				  <div class="form_group">
+				    <label for="nombre">
+				      ${reservaData.formFields.nombre.label}:
+				    </label>
+				     <input type="text" id="nombre" name="nombre"
+	 			     placeholder="
+	 			     ${reservaData.formFields.nombre.placeholder}"required>
+				   </div>
+
+				   <div class="form_group">
+				     <label for="apellido">
+				       ${reservaData.formFields.apellido.label}:
+				     </label>
+				     <input type="text" id="apellido" name="apellido" 
+				       placeholder="
+				      ${reservaData.formFields.apellido.placeholder}" required>
+				   </div>
+				</div>
+
+				<div class="container_form_group">
+				  <div class="form_group">
+				    <label for="fecha">
+				     ${reservaData.formFields.fecha.label}:
+				    </label>
+				     <input type="date" id="fecha" name="fecha" required>
+				  </div>
+
+				  <div class="form_group">
+				   <label for="hora">
+				    ${reservaData.formFields.hora.label}:
+				   </label>
+				   <input type="time" id="hora" name="hora" required>
+				 </div>
+				</div>
+
+				<div class="container_form_group">
+				  <div class="form_group">
+				    <label for="servicio">
+				     ${reservaData.formFields.servicio.label}:
+				    </label>
+				    <select id="servicio" name="servicio" required>
+				     <option value="">
+					${reservaData.formFields.servicio.defaultOption}
+				     </option>
+					${serviceOptionsHTML}
+				   </select>
+				</div>
+
+				<div class="form_group">
+				  <label for="pdf">
+				    ${reservaData.formFields.pdf.label}:
+				  </label>
+				  <select id="pdf" name="pdf">
+				    <option value="si">Sí</option>
+				    <option value="no">No</option>
+				  </select>
+				</div>
+			      </div>
+
+			     <div class="form_group">
+				<label for="tarjeta">
+				  {reservaData.formFields.tarjeta.label}:
+				</label>
+				<select id="tarjeta" name="tarjeta">
+				  ${cardOptionsHTML}
+				</select>
+			    </div>
+
+			    <div class="form_group">
+			      <label for="comentarios">
+				${reservaData.formFields.comentarios.label}:
+			      </label>
+			      <textarea id="comentarios" name="comentarios" placeholder=
+			      "${reservaData.formFields.comentarios.placeholder}">
+			      </textarea>
+			   </div>
+
+			   <div class="form_group">
+			     <button type="submit">
+				${reservaData.header.submitButton}
+			     </button>
+			   </div>
+		         </form>
+		       </div>
+		       
+		       
+		       // Inicializar funcionalidad después de renderizar
+			setTimeout(() => {
+			  initializeReservaForm(reservaData.cards.length, reservaData);
+			}, 100);
 				`;
 
-				// Inicializar funcionalidad después de renderizar
-				setTimeout(() => {
-					initializeReservaForm(cards.length);
-				}, 100);
 			};
 
-			// Función auxiliar para inicializar la funcionalidad del formulario
-			function initializeReservaForm(totalCards) {
-				const leftBtn = document.getElementById('left');
-				const rightBtn = document.getElementById('right');
-				const cards = document.querySelectorAll('.card');
-				const indicators = document.querySelectorAll('.indicator');
-				const form = document.getElementById('reservaForm');
-				const cardSelect = document.getElementById('tarjeta');
-				const buttonReserva = document.getElementById('reserva');
-				const buttonAcompanante = document.getElementById('acompanante');
 
-				let currentIndex = 0;
+			const RenderDashboardViewReserva = (data) => {
+    			  // 1. Renderizar calendario dinámico
+    			    const renderCalendar = (calendarioData) => {
+        			if (!calendarioData) return;
+        		    	const calendarContainer = document.querySelector('.calendar');
+        			
+        			if (!calendarContainer) return;
+        			const month = calendarioData.mes || new Date().getMonth();
+        			const year = calendarioData.año || new Date().getFullYear();
+        			const reservedDates = calendarioData.diasReservados || [];
+        
+        			// Actualizar header
+        			const monthHeader = calendarContainer.querySelector('h3');
+        			if (monthHeader) {
+            			 monthHeader.textContent = `${monthNames[month]} ${year}`;
+        			}
+        
+        			// Limpiar grids previos
+        			const dayGrids = calendarContainer.querySelectorAll('.calendar-grid:not(:first-child)');
+       			        dayGrids.forEach(grid => grid.remove());
+        
+        			const firstDay = new Date(year, month, 1).getDay();
+        			const daysInMonth = new Date(year, month + 1, 0).getDate();
+        			const today = new Date();
+        
+        			let dayCount = 1;
+        			const weeks = Math.ceil((firstDay + daysInMonth) / 7);
+        
+        			for (let week = 0; week < weeks; week++) {
+            			     const weekGrid = document.createElement('ul');
+            			     weekGrid.className = 'calendar-grid';
+            
+            			for (let day = 0; day < 7; day++) {
+                		     const dayCell = document.createElement('li');
+                		     dayCell.className = 'calendar-cell';
+                
+                		     if (week === 0 && day < firstDay) {
+                    			 dayCell.innerHTML = '';
+                    			 
+                		     } else if (dayCount <= daysInMonth) {
+                    			dayCell.className += ' calendar-day';
+                    			dayCell.textContent = dayCount;
+                    			dayCell.tabIndex = 0;
+                    			dayCell.onclick = () => selectDate(dayCell);
+                    
+                    		    if (year === today.getFullYear() &&
+                        		month === today.getMonth() &&
+                        		dayCount === today.getDate()) {
+                        		dayCell.classList.add('today');
+                    		    }
+                    
+                    		   if (reservedDates.includes(dayCount)) {
+                        		dayCell.classList.add('reserved');
+                        		dayCell.style.background = '#82C262';
+                       		        dayCell.style.color = 'white';
+                    		   }
+                    
+                    		dayCount++;
+                	       }
+                
+                	      weekGrid.appendChild(dayCell);
+            		   }
+            
+            		  calendarContainer.appendChild(weekGrid);
+        		}
+    		    };
 
-				// Función para mostrar tarjeta activa
-				function showCard(index) {
-					cards.forEach((card, i) => {
-						card.classList.toggle('active', i === index);
-						if (indicators[i]) {
-							indicators[i].classList.toggle('active', i === index);
-						}
-					});
+    		  // 2. Renderizar tabla de tráfico
+    		  const renderTrafficTable = (traficoData) => {
+        	  if (!traficoData || !Array.isArray(traficoData)) return;
+        	  
+       		    const tbody = document.querySelector('.transfer-table tbody');
+        	  if (!tbody) return;
+   
+        	     tbody.innerHTML = '';
+        
+       		     traficoData.forEach((item, index) => {
+            	     const row = document.createElement('tr');
+            	     row.onclick = () => highlightRow(row);
+            	     row.dataset.id = item.id || index;
+            
+            	     const statusClass = getStatusClass(item.estado);
+                     const monto = item.monto ? ` (${item.monto})` : '';
+            
+            	     row.innerHTML = `
+                      <td>${item.tipoTarjeta}${monto}</td>
+                      <td>${item.hora}</td>
+                      <td><span class="status ${statusClass}">${item.estado}</span></td>
+            	      `;
+            
+            	     tbody.appendChild(row);
+        	   });
+    		};
 
-					currentIndex = index;
-					const activeCard = cards[index];
-					const tipo = activeCard.dataset.card;
-					cardSelect.value = tipo;
+    		// 3. Info cliente
+    		const renderClientInfo = (clienteData) => {
+        	if (!clienteData) return;
+        
+        	const clientInfo = document.querySelector('.client-info');
+        	if (!clientInfo) return;
+        
+        	const tipoCliente = clienteData.tipoCliente ? ` (${clienteData.tipoCliente})` : '';
+        
+        	clientInfo.innerHTML = `
+            	<li>
+            	  <p>
+            	    <strong>Nombre:</strong> 
+            	    ${clienteData.nombre}
+            	    ${tipoCliente}
+            	  </p>
+              </li>
+            <li>
+              <p>
+                <strong>Apellido:</strong> 
+                ${clienteData.apellido}
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Email:</strong> 
+                ${clienteData.email}
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Teléfono:</strong> 
+                ${clienteData.telefono}
+              </p>
+            </li>
+            ${clienteData.fechaRegistro ? 
+                `<li>
+                    <p>
+                      <strong>Registro:</strong>
+                      ${new Date(clienteData.fechaRegistro).toLocaleDateString()}
+                    </p>
+                  </li>` 
+                : ''}
+        	`;
+    	  };
+
+    	  // 4. Zonas
+    	  const renderZoneReservations = (zonasData) => {
+            if (!zonasData || !Array.isArray(zonasData)) return;
+                const zoneContainer = document.querySelector('.card:nth-of-type(4) ul');
+            if (!zoneContainer) return;
+        
+            zoneContainer.innerHTML = '';
+        
+            zonasData.forEach(zona => {
+              const listItem = document.createElement('li');
+              listItem.className = 'list__activity';
+              const estado = zona.estado ? ` - ${zona.estado}` : '';
+              const capacidad = zona.capacidadMaxima ? ` (Cap: ${zona.capacidadMaxima})` : '';
+              listItem.innerHTML = `${zona.area} <em>${zona.zona}${estado}${capacidad}</em>`;
+              zoneContainer.appendChild(listItem);
+           });
+        };
+
+    	// 5. Horarios
+    	const renderScheduleTable = (horariosData) => {
+    	    if (!horariosData || !Array.isArray(horariosData)) return;
+    	        const tbody = document.querySelector('.schedule-table tbody');
+            if (!tbody) return;
+        	tbody.innerHTML = '';
+        
+        	horariosData.forEach(horario => {
+            	const row = document.createElement('tr');
+            	const disponibilidad = horario.disponibles !== undefined ? ` (Disp: ${horario.disponibles})` : '';
+                const reservadas = horario.reservadas !== undefined ? ` - Res: ${horario.reservadas}` : '';
+            
+                row.innerHTML = `<td>${horario.hora}</td><td>${horario.capacidad}${disponibilidad}${reservadas}</td>`;
+            
+            	if (horario.disponibles !== undefined) {
+                  if (horario.disponibles === 0) row.style.backgroundColor = '#ffebee';
+                  else if (horario.disponibles < 5) row.style.backgroundColor = '#fff3e0';
+                  else row.style.backgroundColor = '#e8f5e8';
+            	}
+            
+            	tbody.appendChild(row);
+             });
+    	 };
+
+       	// 6. Pagos
+       	const renderPaymentInfo = (pagosData) => {
+             if (!pagosData) return;
+                const paymentContainer = document.querySelector('.card:nth-of-type(8) ul');
+             if (!paymentContainer) return;
+        
+             const moneda = pagosData.moneda || 'USD';
+             const simbolo = moneda === 'USD' ? '$' : moneda + ' ';
+        
+             let paymentHTML = `
+              <li class="list_pay">Confirmado: <span>${simbolo}${pagosData.confirmado || 0}</span></li>
+              <li class="list_pay">Pendiente: <span>${simbolo}${pagosData.pendiente || 0}</span></li>
+             `;
+        
+             if (pagosData.procesando !== undefined) paymentHTML +=
+         	`<li class="list_pay">Procesando: <span>${simbolo}${pagosData.procesando}</span></li>`;
+             if (pagosData.total !== undefined) paymentHTML += 
+        `	 <li class="list_pay"><strong>Total: <span>${simbolo}${pagosData.total}</span></strong></li>`;
+       	     if (pagosData.ultimaActualizacion) {
+            	 const fecha = new Date(pagosData.ultimaActualizacion).toLocaleString();
+            	 paymentHTML += `<li class="list_pay"><small>Actualizado: ${fecha}</small></li>`;
+             }
+        
+            paymentContainer.innerHTML = paymentHTML;
+    	};
+
+    	// 7. Gráfica
+    	const renderReservationChart = (graficaData) => {
+         if (!graficaData || !Array.isArray(graficaData)) return;
+             const chartContainer = document.querySelector('.card:nth-of-type(6) ul');
+         if (!chartContainer) return;
+             chartContainer.innerHTML = '';
+        
+         graficaData.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.className = 'list__activity';
+            const porcentaje = item.porcentaje ? ` (${item.porcentaje}%)` : '';
+            listItem.innerHTML = `${item.tipo} <em>${item.cantidad} reservas${porcentaje}</em>`;
+            chartContainer.appendChild(listItem);
+        });
+    };
+
+    // Auxiliares
+    const getStatusClass = (estado) => {
+        switch (estado.toLowerCase()) {
+            case 'confirmado': return 'confirmed';
+            case 'pendiente': return 'pending';
+            case 'en proceso': return 'processing';
+            default: return 'pending';
+        }
+    };
+
+    // --- Eventos globales (ejemplo) ---
+      window.selectDate = (element) => {
+        console.log("Fecha seleccionada:", element.textContent);
+      };
+      window.highlightRow = (element) => {
+        element.classList.toggle("highlight");
+      };
+
+      // --- EJECUCIÓN optimizada ---
+      try {
+          if (!data) return;
+
+          const renderers = {
+             calendario: renderCalendar,
+             trafico: renderTrafficTable,
+             cliente: renderClientInfo,
+             zonas: renderZoneReservations,
+             horarios: renderScheduleTable,
+             pagos: renderPaymentInfo,
+             grafica: renderReservationChart,
+          };
+
+          Object.entries(renderers).forEach(([key, fn]) => {
+            if (data[key] && typeof fn === "function") {
+                fn(data[key]);
+             }
+          });
+
+    	  } catch (error) {
+             console.error('❌ Error al renderizar:', error);
+    	   }
+	 };
+
+			const RenderDashboardViewServer = (data) => {
+				// Generación de la vista del servidor
+
+			};
+
+			// Mapeo de rutas JSON a funciones de renderizado
+			const dashboardRoutes = [{
+					json: '../view/json/data_SpaDashboardUser.json',
+					render: RenderDasboardAdmin,
+					error: 'Error al cargar el JSON del administrador',
+				},
+				{
+					json: '../view/json/Data_SpaDashboardManager.json',
+					render: RenderDashboardManager,
+					error: 'Error al cargar el JSON del manager',
+				},
+				{
+					json: '../view/json/data_SpaDashboardClient.json',
+					render: RenderDashboardClient,
+					error: 'Error al cargar el JSON del cliente',
+				},
+				{
+					json: '../view/json/Data_SpaDashboardDuration.json',
+					render: RenderDashboardDuration,
+					error: 'Error al cargar el JSON de duración del servicio',
+				},
+
+				{
+					json: '../view/json/Data_SpaDashboardSystemRegister.json',
+					render: RenderDashboardSystemRegister,
+					error: 'Error al cargar el JSON de Registro del Usuario',
+				},
+
+				{
+					json: '../view/json/Data_SpaDasboardRoles.json',
+					render: RenderDashboardSystemRol,
+					error: 'Error al cargar el JSON de Roles de Systema.',
+
+				},
+				
+				{
+				  json: '../view/json/Data_SpaDashboardReserva.json',
+				  render: RenderDashboardReserva,
+				  error: 'HTTP error! status: ${response.status}',
 				}
-
-				// Validación Luhn para tarjetas
-				function validarTarjetaLuhn(numero) {
-					const num = numero.replace(/\D/g, '');
-					
-					if (num.length < 13 || num.length > 19) return false;
-					
-					let suma = 0;
-					let debeDuplicar = false;
-
-					for (let i = num.length - 1; i >= 0; i--) {
-						let digito = parseInt(num.charAt(i), 10);
-
-						if (debeDuplicar) {
-							digito *= 2;
-							if (digito > 9) digito -= 9;
-						}
-
-						suma += digito;
-						debeDuplicar = !debeDuplicar;
-					}
-
-					return suma % 10 === 0;
+				
+				{
+				   json: '../view/json/Data_SpaViewReserva.json',
+				   render: RenderDashboardViewReserva,
+				   error: 'Error al cargar el JSON de Vista de Reserva.',
 				}
+			];
 
-				// Formatear número de tarjeta
-				cards.forEach(card => {
-					const input = card.querySelector('.card-number input');
-					if (input) {
-						input.addEventListener('input', () => {
-							let value = input.value.replace(/\D/g, '');
-							value = value.substring(0, 19);
-							input.value = value.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
-						});
-					}
-				});
-
-				// Navegación con botones
-				if (leftBtn) {
-					leftBtn.addEventListener('click', () => {
-						let index = (currentIndex - 1 + totalCards) % totalCards;
-						showCard(index);
-					});
-				}
-
-				if (rightBtn) {
-					rightBtn.addEventListener('click', () => {
-						let index = (currentIndex + 1) % totalCards;
-						showCard(index);
-					});
-				}
-
-				// Navegación con indicadores
-				indicators.forEach((indicator, index) => {
-					indicator.addEventListener('click', () => {
-						showCard(index);
-					});
-				});
-
-				// Navegación con teclado
-				document.addEventListener('keydown', (e) => {
-					if (e.key === 'ArrowLeft' && leftBtn) {
-						leftBtn.click();
-					} else if (e.key === 'ArrowRight' && rightBtn) {
-						rightBtn.click();
-					}
-				});
-
-				// Botones de navegación
-				if (buttonReserva) {
-					buttonReserva.addEventListener('click', (e) => {
-						e.preventDefault();
-						// Mantener en la misma página
-						console.log('Manteniendo formulario de reserva activo');
-					});
-				}
-
-				if (buttonAcompanante) {
-					buttonAcompanante.addEventListener('click', (e) => {
-						e.preventDefault();
-						setTimeout(() => {
-							window.location.href = "acompanante.html";
-						}, 500);
-					});
-				}
-
-				// Validación del formulario
-				if (form) {
-					form.addEventListener('submit', (e) => {
-						e.preventDefault();
-
-						const requiredFields = [
-							{ id: 'nombre', message: 'Por favor ingresa tu nombre' },
-							{ id: 'apellido', message: 'Por favor ingresa tu apellido' },
-							{ id: 'fecha', message: 'Por favor selecciona la fecha' },
-							{ id: 'hora', message: 'Por favor selecciona la hora' },
-							{ id: 'servicio', message: 'Por favor selecciona el servicio' }
-						];
-
-						// Validar campos obligatorios
-						for (const field of requiredFields) {
-							const input = document.getElementById(field.id);
-							if (!input.value.trim()) {
-								alert(field.message);
-								input.focus();
-								return;
-							}
-						}
-
-						// Validar número de tarjeta
-						const activeCard = cards[currentIndex];
-						const numeroTarjeta = activeCard.querySelector('.card-number input').value;
-
-						if (!numeroTarjeta.trim()) {
-							alert('Por favor ingresa el número de tarjeta');
-							return;
-						}
-
-						if (!validarTarjetaLuhn(numeroTarjeta)) {
-							alert('Número de tarjeta inválido. Por favor verifica e intenta de nuevo.');
-							return;
-						}
-
-						// Recopilar datos del formulario
-						const formData = {
-							nombre: document.getElementById('nombre').value,
-							apellido: document.getElementById('apellido').value,
-							fecha: document.getElementById('fecha').value,
-							hora: document.getElementById('hora').value,
-							servicio: document.getElementById('servicio').value,
-							numeroTarjeta,
-							generarPDF: document.getElementById('pdf').value,
-							tipoTarjeta: cardSelect.value,
-							comentarios: document.getElementById('comentarios').value.trim(),
-						};
-
-						console.log('Datos de la reserva:', formData);
-						alert('¡Reserva enviada exitosamente!\nRevisa la consola para ver los datos.');
-					});
-				}
-
-				// Inicializar primera tarjeta
-				showCard(0);
-			}
-
-			// Función para cargar el formulario de reserva desde el menú
-			const loadReservaForm = async () => {
+			// Función reutilizable para cargar JSON y renderizar
+			const loadDashboard = async ({
+				json,
+				render,
+				error
+			}) => {
 				try {
-					// Datos de ejemplo - deberías reemplazar esto con tu JSON real
-					const reservaData = {
-						reserva: {
-							header: {
-								title: "Sistema de Reservas",
-								subtitle: "Spa Termal Onsen",
-								submitButton: "Confirmar Reserva"
-							},
-							cards: [
-								{
-									type: "mastercard",
-									brand: "MasterCard",
-									number: "5555 4444 3333 2222",
-									holder: "Juan Pérez",
-									expiry: "12/28",
-									logos: ["red", "orange"]
-								},
-								{
-									type: "visa",
-									brand: "VISA",
-									number: "4532 1234 5678 9012",
-									holder: "María García",
-									expiry: "06/27",
-									logos: null
-								},
-								{
-									type: "oca",
-									brand: "OCA",
-									number: "6789 0123 4567 8901",
-									holder: "Carlos López",
-									expiry: "09/26",
-									logos: ["red", "orange"]
-								},
-								{
-									type: "bbva",
-									brand: "BBVA",
-									number: "4000 5678 9012 3456",
-									holder: "Ana Rodríguez",
-									expiry: "03/29",
-									logos: null
-								},
-								{
-									type: "prex",
-									brand: "PREX",
-									number: "5432 1098 7654 3210",
-									holder: "Luis Fernández",
-									expiry: "11/25",
-									logos: null
-								}
-							],
-							formFields: {
-								nombre: {
-									label: "Nombre",
-									placeholder: "Ingresa tu nombre"
-								},
-								apellido: {
-									label: "Apellido",
-									placeholder: "Ingresa tu apellido"
-								},
-								fecha: {
-									label: "Fecha de Reserva"
-								},
-								hora: {
-									label: "Hora"
-								},
-								servicio: {
-									label: "Servicio / Habitación",
-									defaultOption: "Selecciona una opción",
-									options: [
-										{ value: "habitacion1", label: "Habitación 1" },
-										{ value: "habitacion2", label: "Habitación 2" },
-										{ value: "sala-reunion", label: "Sala de Reunión" },
-										{ value: "suite", label: "Suite Presidential" },
-										{ value: "spa-completo", label: "Paquete Spa Completo" },
-										{ value: "masajes", label: "Sesión de Masajes" }
-									]
-								},
-								pdf: {
-									label: "Generar PDF"
-								},
-								tarjeta: {
-									label: "Tipo de Tarjeta"
-								},
-								comentarios: {
-									label: "Comentarios adicionales",
-									placeholder: "Deja tu comentario..."
-								}
-							},
-							cardTypes: [
-								{ value: "mastercard", label: "Master Card" },
-								{ value: "visa", label: "Visa" },
-								{ value: "oca", label: "OCA" },
-								{ value: "bbva", label: "Visa Internacional (BBVA)" },
-								{ value: "prex", label: "PREX" }
-							],
-							navigation: {
-								reserva: "Reserva",
-								acompanante: "Acompañante"
-							}
-						}
-					};
-
-					RenderDashboardReserva(reservaData);
-
-					/* 
-					// Para usar con archivo JSON real, descomenta esto:
-					const response = await fetch('../view/json/Data_SpaDashboardReserva.json');
-					if (!response.ok) throw new Error('Error al cargar el JSON de reservas');
+					const response = await fetch(json);
+					if (!response.ok) throw new Error(error);
 					const data = await response.json();
-					RenderDashboardReserva(data);
-					*/
-
+					render(data);
 				} catch (err) {
-					console.error('Error al cargar formulario de reservas:', err.message);
-					app.innerHTML = `
-						<div style="text-align: center; padding: 2rem; color: #e74c3c;">
-							<h3>Error al cargar el formulario</h3>
-							<p>No se pudo cargar el formulario de reservas. Por favor, intenta de nuevo.</p>
-						</div>
-					`;
+					console.error(err.message);
+					// Aquí puedes mostrar un alert o mensaje visual en el DOM
 				}
 			};
+
+			const renderPage=(route) =>{
+			   // Ejecutar todos los dashboards que apliquen
+				dashboardRoutes.forEach(route => loadDashboard(route));
+			};
+
+			window.addEventListener('popstate',()=> {
+  			const route=new URL(window.location.href).searchParams
+			.get('route')
+  			||'index';
+  			  renderPage(route);
+			});			
 		</script>
 
+		<script src="../js/RenderMenu.js"></script>
 		<script src="../js/Toggle.js"></script>
-		<script src="../js/MoveArrowScroll.js"></script>
+		<script src="../js/Chart.js"></script>
+		<script type="module" src="../js/RenderGraph.js"></script>
+		<script src="../js/MoveArrowScroll.js"></script>}
+		<script src="../js/ValidationReserva.js"></script>
 	</div>
 </body>
 

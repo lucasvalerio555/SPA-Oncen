@@ -8,18 +8,14 @@ $config = require_once __DIR__ . '/../config/config.php';
 class ValidationRegister {
     public static array $index = []; // array global estático
 
-    /**
-     * Procesa el formulario de registro.
-     * @return array Resultado con 'success', 'errors', 'data' y 'index'
-     */
     public static function processForm(): array {
         $errors = [];
         $data = [];
-        self::$index = []; // limpiar antes de usar
+        self::$index = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                // Sanear datos
+                // Saneamos los datos
                 $data = self::sanitizeData($_POST);
 
                 // Validar campos obligatorios
@@ -31,25 +27,36 @@ class ValidationRegister {
                 // Validar sexo
                 $errors = array_merge($errors, self::validateSexo($data['sexo']));
 
-                // Validar formato del teléfono
+                // Validar teléfono
                 $errors = array_merge($errors, self::validatePhone($data['phone']));
 
                 // Validar contraseñas
-                $errors = array_merge($errors, self::validatePasswords($_POST['password'] ?? '', $_POST['password-confirm'] ?? ''));
+                $pass = $_POST['password'] ?? '';
+                $confirm = $_POST['password-confirm'] ?? '';
+                $errors = array_merge($errors, self::validatePasswords($pass, $confirm));
 
-                // Si no hay errores, setear datos al modelo
+                // Si no hay errores, guardar en modelo y base de datos
                 if (empty($errors)) {
                     $register = new ModelsRegister();
                     $register->setName($data['name']);
                     $register->setSurname($data['surname']);
                     $register->setEmail($data['email']);
                     $register->setPhone($data['phone']);
-                    $register->setPassword($_POST['password']); // Hasheo interno esperado
+                    $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+                    $register->setPassword($hashedPassword);
+
+                    // Guardar en DB
+                    self::saveRegisterDB([
+                        'name' => $data['name'],
+                        'surname' => $data['surname'],
+                        'email' => $data['email'],
+                        'phone' => $data['phone'],
+                        'password' => $hashedPassword
+                    ], $config);
                 }
-            } catch (InvalidArgumentException $e) {
-                $errors[] = $e->getMessage();
+
             } catch (Exception $e) {
-                $errors[] = "Ocurrió un error inesperado. Intenta nuevamente.";
+                $errors[] = "Ocurrió un error inesperado: " . $e->getMessage();
             }
 
             return [
@@ -63,9 +70,6 @@ class ValidationRegister {
         return ['success' => false, 'errors' => [], 'data' => [], 'index' => []];
     }
 
-    /**
-     * Sanear datos del formulario
-     */
     private static function sanitizeData(array $input): array {
         return [
             'name'    => trim($input['name'] ?? ''),
@@ -76,9 +80,6 @@ class ValidationRegister {
         ];
     }
 
-    /**
-     * Valida campos obligatorios y guarda los índices de los que fallan
-     */
     private static function validateRequiredFields(array $data): array {
         $errors = [];
         $required = [
@@ -93,80 +94,69 @@ class ValidationRegister {
         foreach ($required as $field => $msg) {
             if (empty($data[$field])) {
                 $errors[] = $msg;
-                self::$index[] = $count; // guardamos el índice
+                self::$index[] = $count;
             }
             $count++;
         }
         return $errors;
     }
 
-    /**
-     * Valida el email
-     */
     private static function validateEmail(string $email): array {
         return !filter_var($email, FILTER_VALIDATE_EMAIL)
             ? ["El formato del email no es válido."]
             : [];
     }
 
-    /**
-     * Valida el campo sexo
-     */
     private static function validateSexo(string $sexo): array {
-        return (!in_array($sexo, ['Hombre', 'Mujer']))
+        return !in_array($sexo, ['Hombre', 'Mujer'])
             ? ["Valor de sexo no válido."]
             : [];
     }
 
-    /**
-     * Valida el formato del teléfono usando expresión regular
-     */
     private static function validatePhone(string $phone): array {
-        // Regex que permite números tipo +598..., 09..., con o sin espacios o guiones
-        $pattern = '/^\+?\d{0,3}?[-.\s]?(\(?\d{1,4}\)?)?[-.\s]?\d{6,10}$/';
+        // Uruguay: 09xxxxxxx o +598xxxxxxxx
+        $pattern = '/^(09\d{7}|\+598\d{8})$/';
         return !preg_match($pattern, $phone)
             ? ["El formato del teléfono no es válido."]
             : [];
     }
 
-    /**
-     * Valida las contraseñas
-     */
     private static function validatePasswords(string $pass, string $confirm): array {
         $errors = [];
-        if (strlen($pass) < 8) {
-            $errors[] = "La contraseña debe tener al menos 8 caracteres.";
-        }
-        if ($pass !== $confirm) {
-            $errors[] = "Las contraseñas no coinciden.";
-        }
+        if (strlen($pass) < 8) $errors[] = "La contraseña debe tener al menos 8 caracteres.";
+        if ($pass !== $confirm) $errors[] = "Las contraseñas no coinciden.";
         return $errors;
     }
 
-    /**
-     * Muestra errores de campos vacíos según índices
-     */
     public static function FieldIsEmpty(array $errors): void {
         foreach (self::$index as $i) {
             echo '<p class="wrating">' . htmlspecialchars($errors[$i]) . '</p>';
         }
     }
-    
-    
-    /**
-    	Método, encargado de almacenar los datos registrado de usuario que
-    	se registro en la base de datos.
-    **/
-    
-    
-    public static function SaveRegisterDB(array $field, $config){
-    	$settingDB =new settingDB($config);
-    
+
+    private static function saveRegisterDB(array $field, $config): void {
+        $settingDB = new settingDB($config);
+
+        // Verificar duplicados por email
+        $existing = $settingDB->select("SELECT * FROM Usuarios WHERE email = ?", [$field['email']]);
+        $existing2 = $settingDB->select("SELECT (nombre, apellido, email, telefono) FROM personas WHERE nombre = ?
+        apellido=? telefono=?",[$field['name'],$field['surname'],$field['email'],$field['phone']]);
+        
+        if ($existing || $existing2){
+            throw new Exception("El email ya está registrado.");
+            echo generateToastScript('warning',"El Usuario ya ha sido Registrado!!!.");
+            return;
+        }
+
+        // Insertar nuevo usuario
+        $settingDB->insert(
+            "INSERT INTO Usuarios (nombre, apellido, email, telefono) VALUES (?, ?, ?, ?)",
+            [$field['nombre'], $field['apellido'], $field['email'], $field['telefono']]
+        );
+        
+        echo generateToastScript('success',"El Usuario ha sido Registrado Correctamente!!!.");  
     }
-    
-    /**
-     * Genera el script del toast con slider animado.
-     */
+
     public static function generateToastScript(string $icon, string $title, string $accentColor = '#4caf50'): string {
         return "<script>
 const Toast = Swal.mixin({

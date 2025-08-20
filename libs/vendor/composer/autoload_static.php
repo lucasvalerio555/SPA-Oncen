@@ -50,7 +50,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
-            'Facebook\\' => 9,
+            'FacebookAds\\' => 12,
         ),
     );
 
@@ -124,9 +124,9 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
-        'Facebook\\' => 
+        'FacebookAds\\' => 
         array (
-            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+            0 => __DIR__ . '/..' . '/facebook/php-business-sdk/src/FacebookAds',
         ),
     );
 

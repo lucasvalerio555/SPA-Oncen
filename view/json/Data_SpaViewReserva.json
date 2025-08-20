@@ -1,0 +1,324 @@
+{
+  "_comment": "ESTRUCTURA COMPLETA DE DATOS PARA EL DASHBOARD DE RESERVAS",
+  
+  "dashboardData": {
+    "calendario": {
+      "mes": 5,
+      "año": 2025,
+      "diasReservados": [13, 15, 20, 25, 28],
+      "fechaActual": "2025-06-13"
+    },
+    
+    "trafico": [
+      {
+        "id": 1,
+        "tipoTarjeta": "Visa",
+        "hora": "10:30",
+        "estado": "Confirmado",
+        "monto": 150.00
+      },
+      {
+        "id": 2,
+        "tipoTarjeta": "MasterCard", 
+        "hora": "11:15",
+        "estado": "Pendiente",
+        "monto": 75.50
+      },
+      {
+        "id": 3,
+        "tipoTarjeta": "American Express",
+        "hora": "12:00", 
+        "estado": "En Proceso",
+        "monto": 200.00
+      },
+      {
+        "id": 4,
+        "tipoTarjeta": "Visa",
+        "hora": "14:30",
+        "estado": "Confirmado",
+        "monto": 95.00
+      }
+    ],
+    
+    "cliente": {
+      "id": "C001",
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "email": "juan.perez@email.com",
+      "telefono": "+598 99 123 456",
+      "fechaRegistro": "2025-01-15",
+      "tipoCliente": "Premium"
+    },
+    
+    "zonas": [
+      {
+        "id": "Z001",
+        "area": "Piscina Termal",
+        "zona": "Zona Pilates",
+        "estado": "Disponible",
+        "capacidadMaxima": 15
+      },
+      {
+        "id": "Z002", 
+        "area": "Spa Relajación",
+        "zona": "Zona Masajes",
+        "estado": "Reservado",
+        "capacidadMaxima": 8
+      },
+      {
+        "id": "Z003",
+        "area": "Gimnasio",
+        "zona": "Zona Cardio", 
+        "estado": "Mantenimiento",
+        "capacidadMaxima": 25
+      }
+    ],
+    
+    "horarios": [
+      {
+        "id": "H001",
+        "hora": "08:00 - 09:00",
+        "capacidad": 30,
+        "reservadas": 15,
+        "disponibles": 15
+      },
+      {
+        "id": "H002",
+        "hora": "09:00 - 10:00",
+        "capacidad": 30,
+        "reservadas": 22,
+        "disponibles": 8
+      },
+      {
+        "id": "H003", 
+        "hora": "10:00 - 11:00",
+        "capacidad": 30,
+        "reservadas": 30,
+        "disponibles": 0
+      },
+      {
+        "id": "H004",
+        "hora": "11:00 - 12:00",
+        "capacidad": 25,
+        "reservadas": 18,
+        "disponibles": 7
+      }
+    ],
+    
+    "pagos": {
+      "confirmado": 520.50,
+      "pendiente": 175.75,
+      "procesando": 89.25,
+      "total": 785.50,
+      "moneda": "USD",
+      "ultimaActualizacion": "2025-06-13T10:30:00Z"
+    },
+    
+    "grafica": [
+      {
+        "id": "G001",
+        "tipo": "Piscina Termal",
+        "cantidad": 15,
+        "porcentaje": 35.7,
+        "color": "#82C262"
+      },
+      {
+        "id": "G002",
+        "tipo": "Zona Pilates", 
+        "cantidad": 8,
+        "porcentaje": 19.0,
+        "color": "#667eea"
+      },
+      {
+        "id": "G003",
+        "tipo": "Spa Relajación",
+        "cantidad": 12,
+        "porcentaje": 28.6,
+        "color": "#f093fb"
+      },
+      {
+        "id": "G004",
+        "tipo": "Gimnasio",
+        "cantidad": 7,
+        "porcentaje": 16.7,
+        "color": "#ffeaa7"
+      }
+    ],
+    
+    "reservasPorFecha": {
+      "13": [
+        {
+          "tipoTarjeta": "Visa",
+          "hora": "10:30",
+          "estado": "Confirmado",
+          "servicio": "Piscina Termal"
+        }
+      ],
+      "15": [
+        {
+          "tipoTarjeta": "MasterCard",
+          "hora": "11:15", 
+          "estado": "Pendiente",
+          "servicio": "Spa Relajación"
+        },
+        {
+          "tipoTarjeta": "American Express",
+          "hora": "14:00",
+          "estado": "Confirmado", 
+          "servicio": "Zona Pilates"
+        }
+      ],
+      "20": [
+        {
+          "tipoTarjeta": "Visa",
+          "hora": "09:30",
+          "estado": "En Proceso",
+          "servicio": "Gimnasio"
+        }
+      ]
+    }
+  },
+  
+  "_schemas": {
+    "_comment": "ESQUEMAS INDIVIDUALES PARA CADA SECCIÓN",
+    
+    "calendarioSchema": {
+      "mes": "number (0-11, donde 0=enero)",
+      "año": "number",
+      "diasReservados": "array de numbers",
+      "fechaActual": "string ISO date"
+    },
+    
+    "traficoItemSchema": {
+      "id": "number|string",
+      "tipoTarjeta": "string",
+      "hora": "string (HH:MM)",
+      "estado": "string (Confirmado|Pendiente|En Proceso)",
+      "monto": "number (opcional)"
+    },
+    
+    "clienteSchema": {
+      "id": "string",
+      "nombre": "string",
+      "apellido": "string", 
+      "email": "string",
+      "telefono": "string",
+      "fechaRegistro": "string ISO date (opcional)",
+      "tipoCliente": "string (opcional)"
+    },
+    
+    "zonaItemSchema": {
+      "id": "string",
+      "area": "string",
+      "zona": "string",
+      "estado": "string (opcional)",
+      "capacidadMaxima": "number (opcional)"
+    },
+    
+    "horarioItemSchema": {
+      "id": "string",
+      "hora": "string (HH:MM - HH:MM)",
+      "capacidad": "number",
+      "reservadas": "number (opcional)",
+      "disponibles": "number (opcional)"
+    },
+    
+    "pagosSchema": {
+      "confirmado": "number",
+      "pendiente": "number", 
+      "procesando": "number (opcional)",
+      "total": "number (opcional)",
+      "moneda": "string (opcional)",
+      "ultimaActualizacion": "string ISO date (opcional)"
+    },
+    
+    "graficaItemSchema": {
+      "id": "string",
+      "tipo": "string",
+      "cantidad": "number",
+      "porcentaje": "number (opcional)",
+      "color": "string hex color (opcional)"
+    }
+  },
+  
+  "_ejemplosMinimos": {
+    "_comment": "EJEMPLOS CON DATOS MÍNIMOS REQUERIDOS",
+    
+    "ejemploMinimo": {
+      "calendario": {
+        "mes": 5,
+        "año": 2025
+      },
+      "trafico": [
+        {
+          "tipoTarjeta": "Visa",
+          "hora": "10:30",
+          "estado": "Confirmado"
+        }
+      ],
+      "cliente": {
+        "nombre": "Juan",
+        "apellido": "Pérez", 
+        "email": "juan@email.com",
+        "telefono": "+598 99 123 456"
+      },
+      "zonas": [
+        {
+          "area": "Piscina Termal",
+          "zona": "Zona Pilates"
+        }
+      ],
+      "horarios": [
+        {
+          "hora": "08:00 - 09:00",
+          "capacidad": 30
+        }
+      ],
+      "pagos": {
+        "confirmado": 150,
+        "pendiente": 50
+      },
+      "grafica": [
+        {
+          "tipo": "Piscina Termal",
+          "cantidad": 15
+        }
+      ]
+    }
+  },
+  
+  "_estadosValidos": {
+    "_comment": "VALORES VÁLIDOS PARA CAMPOS DE ESTADO",
+    
+    "estadosReserva": [
+      "Confirmado",
+      "Pendiente", 
+      "En Proceso",
+      "Cancelado",
+      "Completado"
+    ],
+    
+    "estadosZona": [
+      "Disponible",
+      "Reservado",
+      "Ocupado", 
+      "Mantenimiento",
+      "Cerrado"
+    ],
+    
+    "tiposCliente": [
+      "Regular",
+      "Premium",
+      "VIP",
+      "Corporativo"
+    ],
+    
+    "tiposTarjeta": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "Dinners Club",
+      "Discover"
+    ]
+  }
+}

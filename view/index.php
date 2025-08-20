@@ -680,9 +680,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	    $login->login($models);
 
-      $enable = $login->ValidationField(
-      $models->getEmail(),
-      $models->getPassword());
+      	    $enable = $login->ValidationField(
+            $models->getEmail(),
+            $models->getPassword());
       
 	    if(!$enable){
 	      echo 'Login....';
@@ -693,9 +693,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	      }else if(isset($_POST['submit-facebook'])){
 	         echo 'Login facebook!!!';
 	      }	
-	    }
-   }
-}
+	   }
+      }
+ }
 ?>
 
 </body>

@@ -1,0 +1,163 @@
+{
+  "reserva": {
+    "header": {
+      "title": "Sistema de Reservas",
+      "subtitle": "Spa Termal Onsen",
+      "submitButton": "Confirmar Reserva"
+    },
+    "cards": [
+      {
+        "type": "mastercard",
+        "brand": "MasterCard",
+        "number": "5555 4444 3333 2222",
+        "holder": "Juan Pérez",
+        "expiry": "12/28",
+        "logos": ["red", "orange"]
+      },
+      {
+        "type": "visa",
+        "brand": "VISA",
+        "number": "4532 1234 5678 9012",
+        "holder": "María García",
+        "expiry": "06/27",
+        "logos": null
+      },
+      {
+        "type": "oca",
+        "brand": "OCA",
+        "number": "6789 0123 4567 8901",
+        "holder": "Carlos López",
+        "expiry": "09/26",
+        "logos": ["red", "orange"]
+      },
+      {
+        "type": "bbva",
+        "brand": "BBVA",
+        "number": "4000 5678 9012 3456",
+        "holder": "Ana Rodríguez",
+        "expiry": "03/29",
+        "logos": null
+      },
+      {
+        "type": "prex",
+        "brand": "PREX",
+        "number": "5432 1098 7654 3210",
+        "holder": "Luis Fernández",
+        "expiry": "11/25",
+        "logos": null
+      }
+    ],
+    "formFields": {
+      "nombre": {
+        "label": "Nombre",
+        "placeholder": "Ingresa tu nombre"
+      },
+      "apellido": {
+        "label": "Apellido",
+        "placeholder": "Ingresa tu apellido"
+      },
+      "fecha": {
+        "label": "Fecha de Reserva"
+      },
+      "hora": {
+        "label": "Hora"
+      },
+      "servicio": {
+        "label": "Servicio / Habitación",
+        "defaultOption": "Selecciona una opción",
+        "options": [
+          {
+            "value": "habitacion1",
+            "label": "Habitación 1"
+          },
+          {
+            "value": "habitacion2",
+            "label": "Habitación 2"
+          },
+          {
+            "value": "sala-reunion",
+            "label": "Sala de Reunión"
+          },
+          {
+            "value": "suite",
+            "label": "Suite Presidential"
+          },
+          {
+            "value": "spa-completo",
+            "label": "Paquete Spa Completo"
+          },
+          {
+            "value": "masajes",
+            "label": "Sesión de Masajes"
+          }
+        ]
+      },
+      "pdf": {
+        "label": "Generar PDF"
+      },
+      "tarjeta": {
+        "label": "Tipo de Tarjeta"
+      },
+      "comentarios": {
+        "label": "Comentarios adicionales",
+        "placeholder": "Deja tu comentario..."
+      }
+    },
+    "validation": {
+      "requiredFields": [
+        {
+          "id": "nombre",
+          "message": "Por favor ingresa tu nombre"
+        },
+        {
+          "id": "apellido", 
+          "message": "Por favor ingresa tu apellido"
+        },
+        {
+          "id": "fecha",
+          "message": "Por favor selecciona la fecha"
+        },
+        {
+          "id": "hora",
+          "message": "Por favor selecciona la hora"
+        },
+        {
+          "id": "servicio",
+          "message": "Por favor selecciona el servicio"
+        }
+      ],
+      "cardValidation": {
+        "emptyMessage": "Por favor ingresa el número de tarjeta",
+        "invalidMessage": "Número de tarjeta inválido. Por favor verifica e intenta de nuevo."
+      },
+      "successMessage": "¡Reserva enviada exitosamente!\nRevisa la consola para ver los datos."
+    }
+    },
+    "cardTypes": [
+      {
+        "value": "mastercard",
+        "label": "Master Card"
+      },
+      {
+        "value": "visa",
+        "label": "Visa"
+      },
+      {
+        "value": "oca",
+        "label": "OCA"
+      },
+      {
+        "value": "bbva",
+        "label": "Visa Internacional (BBVA)"
+      },
+      {
+        "value": "prex",
+        "label": "PREX"
+      }
+    ],
+    "navigation": {
+      "reserva": "Reserva",
+      "acompanante": "Acompañante"
+    }
+  }
+}
