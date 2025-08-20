@@ -5,8 +5,8 @@ class Config {
             'db' => [
                 'host'     => 'localhost',
                 'dbname'   => 'spa_once',
-                'user'     => 'root',
-                'pass'     => '',
+                'user'     => 'SPATermalOnce',
+                'pass'     => 'SpaOnce#360@2000#PrivilyDany',
                 'charset'  => 'utf8',
             ],
             'options' => [
