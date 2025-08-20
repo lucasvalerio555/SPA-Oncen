@@ -42,16 +42,19 @@ class ValidationRegister {
                     $register->setSurname($data['surname']);
                     $register->setEmail($data['email']);
                     $register->setPhone($data['phone']);
+
+                    // ✅ Hashear contraseña antes de guardar
                     $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
                     $register->setPassword($hashedPassword);
 
                     // Guardar en DB
                     self::saveRegisterDB([
-                        'name' => $data['name'],
-                        'surname' => $data['surname'],
-                        'email' => $data['email'],
-                        'phone' => $data['phone'],
-                        'password' => $hashedPassword
+                        'nombre'   => $data['name'],
+                        'apellido' => $data['surname'],
+                        'email'    => $data['email'],
+                        'telefono' => $data['phone'],
+                        'sexo'     => $data['sexo'],
+                        'Pass'     => $hashedPassword
                     ], $config);
                 }
 
@@ -135,27 +138,48 @@ class ValidationRegister {
     }
 
     private static function saveRegisterDB(array $field, $config): void {
-        $settingDB = new settingDB($config);
+      $settingDB = new settingDB($config);
 
-        // Verificar duplicados por email
-        $existing = $settingDB->select("SELECT * FROM Usuarios WHERE email = ?", [$field['email']]);
-        $existing2 = $settingDB->select("SELECT (nombre, apellido, email, telefono) FROM personas WHERE nombre = ?
-        apellido=? telefono=?",[$field['name'],$field['surname'],$field['email'],$field['phone']]);
-        
-        if ($existing || $existing2){
-            throw new Exception("El email ya está registrado.");
-            echo generateToastScript('warning',"El Usuario ya ha sido Registrado!!!.");
-            return;
-        }
+      // Fijar el 
+      rol
+      	$tipoRol = "Cliente";
+      	$statusPerson= "Habilitado";
+      	$statusUser="Activo";
+      	
 
-        // Insertar nuevo usuario
-        $settingDB->insert(
-            "INSERT INTO Usuarios (nombre, apellido, email, telefono) VALUES (?, ?, ?, ?)",
-            [$field['nombre'], $field['apellido'], $field['email'], $field['telefono']]
-        );
-        
-        echo generateToastScript('success',"El Usuario ha sido Registrado Correctamente!!!.");  
-    }
+      // Verificar duplicados por email en Usuarios
+      $existingUser = $settingDB->select(
+         "SELECT Tipo_Rol FROM Usuarios WHERE Email = ?",
+         [$field['email']]
+      );
+
+     // Verificar duplicados en Personas
+     $existingPepole = $settingDB->select(
+        "SELECT Nombre, Apellido, Email, Telefono, Sexo 
+         FROM Personas 
+         WHERE Nombre = ? AND Apellido = ? AND Telefono = ?",
+        [$field['nombre'], $field['apellido'], $field['telefono']]
+     );
+
+     if ($existingUser || $existingPepole) {
+         echo self::generateToastScript('warning', "El Usuario ya ha sido Registrado!!!.");
+         return;
+     }
+
+     // Insertar nuevo usuario en Personas
+     $settingDB->insert(
+        "INSERT INTO Personas (Nombre, Apellido, Email, Telefono, Sexo, Estado_Persona) VALUES (?, ?, ?, ?, ?, ?)",
+        [$field['nombre'], $field['apellido'], $field['email'], $field['telefono'], $field['sexo'],$statusPerson]
+     );
+
+     // ✅ Insertar rol en Usuarios con contraseña hasheada
+     $settingDB->insert(
+        "INSERT INTO Usuarios (Tipo_Rol, Pass, Estado_Usuario) VALUES (?, ?, ?)",
+        [$tipoRol, $field['Pass'], $statusUser]
+     );
+
+     echo self::generateToastScript('success', "El Usuario ha sido Registrado Correctamente!!!.");
+ }
 
     public static function generateToastScript(string $icon, string $title, string $accentColor = '#4caf50'): string {
         return "<script>

@@ -1,11 +1,20 @@
 <?php
-require_once '../libs/vendor/autoload.php';
-require_once '../models/ModelsLogin.php';
+require_once __DIR__ . '/../libs/vendor/autoload.php';
+require_once __DIR__ . '/../models/ModelsLogin.php';
+require_once __DIR__ . '/../config/settingDB.php';
+require_once __DIR__ . '/../config/config.php';
+
+use Google\Client as Google_Client;
+use Google\Service\Oauth2 as Google_Service_Oauth2;
+
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
 
 class ValidationLogin
 {
     private string $redirectUri = 'http://localhost/SPA_ONCE/index.php';
-    private string $clientSecret = '../view/json/Data_credencialGoogleApi.json';
+    private string $clientSecret = __DIR__ . '/../view/json/Data_credencialGoogleApi.json';
 
     private array $credentialFacebook = [
         'app_id' => 'TU_APP_ID',         // Cambia por tu App ID
@@ -14,22 +23,24 @@ class ValidationLogin
     ];
 
     /**
+     * Inicia sesión segura si no está ya iniciada
+     */
+    private function startSession(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    /**
      * Valida si los campos email y password no están vacíos
      */
-    public function ValidationField(ModelsLogin $models): void
+    public function ValidationField(ModelsLogin $models): ?array
     {
         $email = trim($models->getEmail());
         $password = trim($models->getPassword());
 
-        if (!empty($email) && !empty($password)) {
-            echo "¡Correcto!";
-            $this->sanetizacion(
-                $email,
-                '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-                $password,
-                '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'
-            );
-        } else {
+        if (empty($email) || empty($password)) {
             echo "<script>
                 Swal.fire({
                     icon: 'warning',
@@ -38,27 +49,28 @@ class ValidationLogin
                     timer: 2500
                 });
             </script>";
+            return null;
         }
-    }
 
-    /**
-     * Sanitización de email y password
-     */
-    public function sanetizacion(
-        string $email,
-        string $rexmail,
-        string $password,
-        string $rexpassword
-    ): array {
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $password = preg_replace('/[^\p{L}\p{N}\p{P}\p{S}]/u', '', $password);
+        // Validar formato
+        $emailValido = filter_var($email, FILTER_VALIDATE_EMAIL);
+        $passwordValido = preg_match('/^(?=.*[A-Za-z])(?=.*\d).{8,}$/', $password);
 
-        $emailValido = preg_match($rexmail, $email);
-        $passwordValido = preg_match($rexpassword, $password);
+        if (!$emailValido || !$passwordValido) {
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: '❌ Formato de correo o contraseña inválido',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            </script>";
+            return null;
+        }
 
         return [
-            'email' => $emailValido ? $email : null,
-            'password' => $passwordValido ? $password : null
+            'email' => $email,
+            'password' => $password
         ];
     }
 
@@ -67,7 +79,7 @@ class ValidationLogin
      */
     public function SignLoginGoogle(): void
     {
-        session_start();
+        $this->startSession();
 
         $client = new Google_Client();
         $client->setAuthConfig($this->clientSecret);
@@ -85,7 +97,7 @@ class ValidationLogin
      */
     public function requestCode(string $code): bool
     {
-        session_start();
+        $this->startSession();
 
         $client = new Google_Client();
         $client->setAuthConfig($this->clientSecret);
@@ -125,9 +137,9 @@ class ValidationLogin
      */
     public function SignLoginFacebook(): void
     {
-        session_start();
+        $this->startSession();
 
-        $facebook = new \Facebook\Facebook($this->credentialFacebook);
+        $facebook = new Facebook($this->credentialFacebook);
         $helper = $facebook->getRedirectLoginHelper();
 
         try {
@@ -136,12 +148,10 @@ class ValidationLogin
             }
 
             $accessToken = $helper->getAccessToken();
-            
-        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+        } catch (FacebookResponseException $e) {
             error_log('Graph API error: ' . $e->getMessage());
             exit;
-            
-        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+        } catch (FacebookSDKException $e) {
             error_log('Facebook SDK error: ' . $e->getMessage());
             exit;
         }
@@ -163,7 +173,8 @@ class ValidationLogin
             $oAuth2Client = $facebook->getOAuth2Client();
             $longLivedAccessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
             $_SESSION['facebook_access_token'] = (string)$longLivedAccessToken;
-        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+            
+        } catch (FacebookSDKException $e) {
             error_log('Error obteniendo token largo: ' . $e->getMessage());
         }
 
@@ -172,7 +183,7 @@ class ValidationLogin
             'access_token' => $_SESSION['facebook_access_token'],
             'created_at'   => date('Y-m-d H:i:s'),
         ];
-        file_put_contents('../view/json/facebook_token.json', json_encode($tokenData, JSON_PRETTY_PRINT));
+        file_put_contents(__DIR__ . '/../view/json/facebook_token.json', json_encode($tokenData, JSON_PRETTY_PRINT));
 
         // Obtener datos del usuario
         try {
@@ -188,7 +199,7 @@ class ValidationLogin
 
             header('Location: index.php?route=dashboard');
             exit;
-        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+        } catch (FacebookResponseException $e) {
             error_log('Error al obtener datos del usuario: ' . $e->getMessage());
         }
     }
@@ -198,11 +209,46 @@ class ValidationLogin
      */
     public function getFacebookLoginUrl(): string
     {
-        $facebook = new \Facebook\Facebook($this->credentialFacebook);
+        $facebook = new Facebook($this->credentialFacebook);
         $helper = $facebook->getRedirectLoginHelper();
         $permissions = ['email']; // Añadir más permisos si necesitas
 
         return $helper->getLoginUrl($this->redirectUri, $permissions);
+    }
+
+    /**
+     * Login clásico con email y contraseña
+     */
+    public function SignLogin(array $field, $config): void
+    {
+        $this->startSession();
+
+        $settingDB = new SettingDB($config);
+        $settingDB->select(
+            "SELECT u.idUsuario, u.Password, p.Email 
+             FROM Usuarios u
+             INNER JOIN Personas p ON u.PersonaId = p.idPersona
+             WHERE p.Email = ?"
+        );
+        
+        $settingDB->execute([$field['email']]);
+        $result = $settingDB->getResult();
+
+        if (count($result) > 0) {
+            $row = $result[0];
+
+            if (!empty($row['Password']) && password_verify($field['password'], $row['Password'])) {
+                $_SESSION['user'] = [
+                    'id' => $row['idUsuario'],
+                    'email' => $row['Email']
+                ];
+                
+                header('Location: index.php?route=dashboard');
+                exit;
+            }
+        }
+
+        echo "<p class='warning'>El correo y/o la contraseña son incorrectos</p>";
     }
 }
 ?>
